@@ -1,6 +1,8 @@
 # No More
+<img src="https://github.com/user-attachments/assets/b01a551a-f016-43c4-bb51-6e2ab1af5dd8" alt="アプリ画面" width="250">
 
 # 概要  
 No Moreは、「やらないこと」を記録・共有するSNSです。夜更かし、隙間時間のSNSや衝動買いなど、日常生活の中で自分が手放したい習慣を「やらない」と宣言し、他のユーザーと共感・励まし合いながら継続を目指すことができます。
+
 # サイトテーマ
 〜やらないことを共有して、心を軽くするSNS〜
