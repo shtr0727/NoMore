@@ -10,24 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_03_135357) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_03_144221) do
   create_table "badges", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
+    t.string "name", null: false
+    t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
-    t.text "content"
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,12 +52,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_03_135357) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.text "post"
-    t.text "reason"
+    t.text "post", null: false
+    t.text "reason", null: false
     t.integer "category_id", null: false
     t.integer "streak_id", null: false
-    t.boolean "is_draft"
-    t.datetime "recorded_on"
+    t.boolean "is_draft", null: false
+    t.datetime "recorded_on", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_posts_on_category_id"
@@ -66,18 +66,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_03_135357) do
   end
 
   create_table "streaks", force: :cascade do |t|
-    t.date "date"
-    t.string "status"
+    t.date "date", null: false
+    t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.integer "profile_image_id"
     t.text "profile"
-    t.string "email"
-    t.string "encrypted_password"
+    t.string "email", null: false
+    t.string "encrypted_password", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
