@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  post: MyText
+  reason: MyText
+  category: one
+  streak: one
+  is_draft: false
+  recorded_on: 2025-07-02 22:20:22
+
+two:
+  user: two
+  post: MyText
+  reason: MyText
+  category: two
+  streak: two
+  is_draft: false
+  recorded_on: 2025-07-02 22:20:22
