@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  get 'not_todos/index'
-  get 'not_todos/show'
-  get 'not_todos/new'
-  get 'not_todos/edit'
+  get 'posts/index'
+  get 'posts/show'
+  get 'posts/new'
+  get 'posts/edit'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   root "tops#top"
   get "home", to: "homes#index"
 
-  resources :not_todos
+  resources :posts
 end
