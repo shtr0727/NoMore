@@ -44,6 +44,14 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# ページネーション用
+gem "kaminari"
+
+# Bootstrap用（importmapでjsを使う場合はgem不要だが、sass等で使う場合はgemも可）
+gem "bootstrap", "~> 5.3"
+gem "sassc-rails"
+# 上記は必要に応じてコメントアウト解除
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
