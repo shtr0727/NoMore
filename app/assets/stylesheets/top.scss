@@ -1,0 +1,200 @@
+/* LPサイト用のシンプルなスタイル */
+
+/* 全体のフォント設定 */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ヒーローセクション */
+.lp-hero {
+  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+  margin-bottom: 40px;
+}
+
+.lp-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.lp-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ボタンスタイル */
+.lp-btn {
+  display: inline-block;
+  background: #ff6b6b;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.lp-btn:hover {
+  background: #ff5252;
+  color: white;
+  text-decoration: none;
+}
+
+/* セクション共通スタイル */
+.lp-problem,
+.lp-solution,
+.lp-features,
+.lp-scenes,
+.lp-target {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto 40px auto;
+}
+
+/* セクションタイトル */
+.lp-problem h2,
+.lp-solution h2,
+.lp-features h2,
+.lp-scenes h2,
+.lp-target h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 10px;
+}
+
+/* 問題提起セクション */
+.lp-problem {
+  background: #f8f9fa;
+}
+
+.lp-problem ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lp-problem li {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #e74c3c;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 解決策セクション */
+.lp-solution {
+  background: white;
+}
+
+.lp-solution ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lp-solution li {
+  background: #ecf0f1;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #27ae60;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 機能紹介セクション */
+.lp-features {
+  background: #f8f9fa;
+}
+
+.lp-feature-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.lp-feature-item {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.lp-feature-item h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.lp-feature-item p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 利用シーン・ターゲットセクション */
+.lp-scenes,
+.lp-target {
+  background: white;
+}
+
+.lp-scenes ul,
+.lp-target ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lp-scenes li,
+.lp-target li {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border-left: 3px solid #3498db;
+}
+
+/* CTAセクション */
+.lp-cta {
+  background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+  margin-top: 40px;
+}
+
+.lp-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .lp-hero h1 {
+    font-size: 2rem;
+  }
+
+  .lp-hero p {
+    font-size: 1rem;
+  }
+
+  .lp-problem h2,
+  .lp-solution h2,
+  .lp-features h2,
+  .lp-scenes h2,
+  .lp-target h2 {
+    font-size: 1.5rem;
+  }
+
+  .lp-feature-list {
+    grid-template-columns: 1fr;
+  }
+}
