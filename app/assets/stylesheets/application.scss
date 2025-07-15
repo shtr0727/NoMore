@@ -5,3 +5,39 @@
 @import "top";
 
 // ここにカスタムスタイルを追加できます
+
+// ヘッダー用スタイル
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.header-logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.header-btn {
+  padding: 0.5rem 1.2rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.header-btn:hover {
+  background: #e0e0e0;
+}
