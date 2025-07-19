@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  get '/signup', to: redirect('/users/sign_up')
   get 'posts/index'
   get 'posts/show'
   get 'posts/new'
