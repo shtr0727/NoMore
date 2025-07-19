@@ -16,8 +16,20 @@
         <a href="/">No More</a>
       </div>
       <nav class="header-nav">
-        <a href="/login" class="header-btn">ログイン</a>
-        <a href="/guest_login" class="header-btn">ゲストログイン</a>
+        <% if user_signed_in? %>
+          <a href="<%= home_path %>" class="header-btn">ホーム</a>
+          <a href="<%= new_post_path %>" class="header-btn">投稿作成</a>
+          <a href="#" class="header-btn">ユーザー一覧</a> <!-- 仮リンク: users_path等ができたら修正 -->
+          <a href="<%= edit_user_registration_path %>" class="header-btn">マイページ</a>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'header-btn' %>
+          <form action="#" method="get" class="header-search-form" style="display:inline;">
+            <input type="text" name="q" placeholder="検索..." class="header-search-input" />
+            <button type="submit" class="header-search-btn">検索</button>
+          </form>
+        <% else %>
+          <a href="/login" class="header-btn">ログイン</a>
+          <a href="/guest_login" class="header-btn">ゲストログイン</a>
+        <% end %>
       </nav>
     </header>
     <p class="notice"><%= notice %></p>
