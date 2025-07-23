@@ -1,0 +1,48 @@
+<h1>投稿作成</h1>
+
+<%= form_with(model: @post, local: true) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :post, "やめたいこと" %><br>
+    <%= f.text_area :post, rows: 3 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :reason, "理由" %><br>
+    <%= f.text_area :reason, rows: 2 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :category_id, "カテゴリ" %><br>
+    <%= f.collection_select :category_id, @categories, :id, :name, prompt: "選択してください" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :streak_id, "継続記録" %><br>
+    <%= f.collection_select :streak_id, @streaks, :id, :status, prompt: "選択してください" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :is_draft, "下書き保存" %>
+    <%= f.check_box :is_draft %>
+  </div>
+
+  <div class="field">
+    <%= f.label :recorded_on, "日付" %><br>
+    <%= f.date_field :recorded_on, value: Date.today %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "投稿する" %>
+  </div>
+<% end %>

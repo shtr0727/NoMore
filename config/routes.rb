@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'posts/new'
+  get 'posts/create'
   get 'homes/index'
   devise_for :users
   get '/signup', to: redirect('/users/sign_up')
