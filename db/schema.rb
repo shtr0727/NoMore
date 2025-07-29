@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_15_145340) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_16_160000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -83,13 +83,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_145340) do
     t.text "post", null: false
     t.text "reason", null: false
     t.integer "category_id", null: false
-    t.integer "streak_id", null: false
     t.boolean "is_draft", null: false
     t.datetime "recorded_on", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_posts_on_category_id"
-    t.index ["streak_id"], name: "index_posts_on_streak_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -124,6 +122,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_145340) do
   add_foreign_key "post_badges", "badges"
   add_foreign_key "post_badges", "posts"
   add_foreign_key "posts", "categories"
-  add_foreign_key "posts", "streaks"
   add_foreign_key "posts", "users"
 end

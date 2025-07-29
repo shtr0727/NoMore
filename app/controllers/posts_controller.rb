@@ -22,6 +22,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:post, :reason, :category_id, :streak_id, :is_draft, :recorded_on)
+    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on)
   end
 end

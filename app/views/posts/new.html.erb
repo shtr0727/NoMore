@@ -28,11 +28,6 @@
   </div>
 
   <div class="field">
-    <%= f.label :streak_id, "継続記録" %><br>
-    <%= f.collection_select :streak_id, @streaks, :id, :status, prompt: "選択してください" %>
-  </div>
-
-  <div class="field">
     <%= f.label :is_draft, "下書き保存" %>
     <%= f.check_box :is_draft %>
   </div>
