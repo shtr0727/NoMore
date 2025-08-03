@@ -1,10 +1,10 @@
-<h1>Homes#index</h1>
-<p>Find me in app/views/homes/index.html.erb</p>
-<% if @posts.present? %>
+<h1>ホーム</h1>
+<p>Find me in app/views/homes/index.html.erb<p><% if @posts.present? %>
   <ul>
     <% @posts.each do |post| %>
       <li>
         <strong><%= post.post %></strong><br>
+        投稿者: <%= post.user.name %><br>
         理由: <%= post.reason %><br>
         カテゴリ: <%= post.category&.name %><br>
         日付: <%= post.recorded_on %>
