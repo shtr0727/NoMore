@@ -1,9 +1,9 @@
 <h1>ホーム</h1>
-<p>Find me in app/views/homes/index.html.erb<p><% if @posts.present? %>
+<p>Find me in app/views/homes/index.html.erb</p><% if @posts.present? %>
   <ul>
     <% @posts.each do |post| %>
       <li>
-        <strong><%= post.post %></strong><br>
+        <strong><%= link_to post.post, post_path(post) %></strong><br>
         投稿者: <%= post.user.name %><br>
         理由: <%= post.reason %><br>
         カテゴリ: <%= post.category&.name %><br>
