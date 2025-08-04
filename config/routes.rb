@@ -1,23 +1,18 @@
 Rails.application.routes.draw do
-  get 'posts/new'
-  get 'posts/create'
-  get 'homes/index'
+  # Devise routes for user authentication
   devise_for :users
+  
+  # Convenience redirects for authentication
   get '/signup', to: redirect('/users/sign_up')
   get '/login', to: redirect('/users/sign_in')
-  get 'posts/index'
-  get 'posts/show'
-  get 'posts/new'
-  get 'posts/edit'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  
+  # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
+  # Root route
   root "tops#top"
+  
+  # Application routes
   get "home", to: "homes#index"
-
   resources :posts
 end
