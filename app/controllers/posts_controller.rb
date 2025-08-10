@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def new
     @post = Post.new
@@ -20,10 +21,33 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    # @post は set_post で設定済み
+  end
+
+  def edit
+    # @post は set_post で設定済み
+    @categories = Category.all
+  end
+
+  def update
+    if @post.update(post_params)
+      redirect_to @post, notice: '投稿が更新されました'
+    else
+      @categories = Category.all # エラー時にもカテゴリを再取得
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to home_path, notice: '投稿が削除されました'
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on)
