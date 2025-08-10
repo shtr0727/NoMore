@@ -41,6 +41,12 @@
   text-decoration: none;
   font-weight: bold;
   transition: background 0.2s;
+  display: flex;
+  /* Flexboxを有効に */
+  align-items: center;
+  /* 垂直方向中央寄せ */
+  justify-content: center;
+  /* 水平方向中央寄せ */
 }
 
 .header-btn:hover {

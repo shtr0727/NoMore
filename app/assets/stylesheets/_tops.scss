@@ -45,6 +45,12 @@ body {
   text-decoration: none;
   font-weight: bold;
   font-size: 1.1rem;
+  display: flex;
+  /* Flexboxを有効に */
+  align-items: center;
+  /* 垂直方向中央寄せ */
+  justify-content: center;
+  /* 水平方向中央寄せ */
 }
 
 .lp-btn:hover {
