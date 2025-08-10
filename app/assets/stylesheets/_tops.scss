@@ -5,11 +5,15 @@ body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
   color: #333;
+  /* デフォルトのテキスト色を暗いグレーに */
+  background-color: #f0f2f5;
+  /* 明るいグレーの背景色に */
 }
 
 /* ヒーローセクション */
 .lp-hero {
-  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background: #2c3e50;
+  /* 濃いグレー/ほぼ黒に */
   color: white;
   text-align: center;
   padding: 60px 20px;
@@ -33,7 +37,8 @@ body {
 /* ボタンスタイル */
 .lp-btn {
   display: inline-block;
-  background: #ff6b6b;
+  background: #f37e35;
+  /* 暖色のオレンジに */
   color: white;
   padding: 12px 30px;
   border-radius: 25px;
@@ -43,7 +48,8 @@ body {
 }
 
 .lp-btn:hover {
-  background: #ff5252;
+  background: #ff6200;
+  /* ホバー時に少し濃くする */
   color: white;
   text-decoration: none;
 }
@@ -57,6 +63,8 @@ body {
   padding: 40px 20px;
   max-width: 1000px;
   margin: 0 auto 40px auto;
+  color: #333;
+  /* テキスト色を暗いグレーに */
 }
 
 /* セクションタイトル */
@@ -69,13 +77,16 @@ body {
   text-align: center;
   margin-bottom: 30px;
   color: #2c3e50;
-  border-bottom: 3px solid #3498db;
+  /* 濃いグレーに */
+  border-bottom: 3px solid #bdc3c7;
+  /* 薄いグレーのボーダーに */
   padding-bottom: 10px;
 }
 
 /* 問題提起セクション */
 .lp-problem {
-  background: #f8f9fa;
+  background: #ffffff;
+  /* 白い背景に */
 }
 
 .lp-problem ul {
@@ -84,17 +95,20 @@ body {
 }
 
 .lp-problem li {
-  background: white;
+  background: #f8f9fa;
+  /* ごく薄いグレーの背景に */
   padding: 20px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border-left: 4px solid #e74c3c;
+  border-left: 4px solid #f37e35;
+  /* オレンジに */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* 解決策セクション */
 .lp-solution {
-  background: white;
+  background: #ffffff;
+  /* 白い背景に */
 }
 
 .lp-solution ul {
@@ -103,17 +117,20 @@ body {
 }
 
 .lp-solution li {
-  background: #ecf0f1;
+  background: #f8f9fa;
+  /* ごく薄いグレーの背景に */
   padding: 20px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border-left: 4px solid #27ae60;
+  border-left: 4px solid #f37e35;
+  /* オレンジに */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* 機能紹介セクション */
 .lp-features {
-  background: #f8f9fa;
+  background: #f0f2f5;
+  /* 明るいグレーの背景に */
 }
 
 .lp-feature-list {
@@ -123,7 +140,8 @@ body {
 }
 
 .lp-feature-item {
-  background: white;
+  background: #ffffff;
+  /* 白い背景に */
   padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -132,19 +150,22 @@ body {
 
 .lp-feature-item h3 {
   color: #2c3e50;
+  /* 濃いグレーに */
   margin-bottom: 15px;
   font-size: 1.3rem;
 }
 
 .lp-feature-item p {
   color: #666;
+  /* 中間のグレーに */
   line-height: 1.6;
 }
 
 /* 利用シーン・ターゲットセクション */
 .lp-scenes,
 .lp-target {
-  background: white;
+  background: #f0f2f5;
+  /* 明るいグレーの背景に */
 }
 
 .lp-scenes ul,
@@ -155,16 +176,19 @@ body {
 
 .lp-scenes li,
 .lp-target li {
-  background: #f8f9fa;
+  background: #ffffff;
+  /* 白い背景に */
   padding: 15px 20px;
   margin-bottom: 10px;
   border-radius: 5px;
-  border-left: 3px solid #3498db;
+  border-left: 3px solid #f37e35;
+  /* オレンジに */
 }
 
 /* CTAセクション */
 .lp-cta {
-  background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+  background: #2c3e50;
+  /* 濃いグレー/ほぼ黒に */
   color: white;
   text-align: center;
   padding: 60px 20px;
@@ -174,6 +198,7 @@ body {
 .lp-cta h2 {
   font-size: 2rem;
   margin-bottom: 30px;
+  color: white;
 }
 
 /* レスポンシブ対応 */
