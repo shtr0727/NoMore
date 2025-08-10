@@ -1,0 +1,9 @@
+<h1>投稿詳細</h1>
+
+<p><strong>投稿:</strong> <%= @post.post %></p>
+<p><strong>理由:</strong> <%= @post.reason %></p>
+<p><strong>投稿者:</strong> <%= @post.user.name %></p>
+<p><strong>カテゴリ:</strong> <%= @post.category&.name %></p>
+<p><strong>日付:</strong> <%= @post.recorded_on %></p>
+
+<%= link_to 'ホームに戻る', home_path %>
