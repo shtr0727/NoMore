@@ -34,6 +34,11 @@ body {
   margin-right: auto;
 }
 
+.lp-btn-group {
+  margin-bottom: 20px;
+  /* Optional: add some space below the button group */
+}
+
 /* ボタンスタイル */
 .lp-btn {
   display: inline-block;
@@ -45,7 +50,14 @@ body {
   text-decoration: none;
   font-weight: bold;
   font-size: 1.1rem;
-  display: flex;
+  max-width: 200px;
+  /* Adjust as needed */
+  margin: 0 auto;
+  /* Center the button itself */
+  display: block;
+  /* Make it a block element to apply margin:auto for centering */
+  width: 100%;
+  /* Add this to make buttons take full width up to max-width */
   /* Flexboxを有効に */
   align-items: center;
   /* 垂直方向中央寄せ */
@@ -199,6 +211,10 @@ body {
   text-align: center;
   padding: 60px 20px;
   margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Center items horizontally in a column */
 }
 
 .lp-cta h2 {
