@@ -20,7 +20,7 @@
           <%= link_to "ホーム", home_path, class: "header-btn" %>
           <%= link_to "投稿作成", new_post_path, class: "header-btn" %>
           <%= link_to "ユーザー一覧", "#", class: "header-btn" %> <!-- 仮リンク: users_path等ができたら修正 -->
-          <%= link_to "マイページ<br>(#{current_user.name}さん)".html_safe, edit_user_registration_path, class: "header-btn" %>
+          <%= link_to "マイページ<br>(#{current_user.name}さん)".html_safe, user_path(current_user), class: "header-btn" %>
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'header-btn' %>
           <%= form_with url: "#", method: :get, class: "header-search-form", style: "display:inline;", local: true do |f| %>
             <%= f.text_field :q, placeholder: "検索...", class: "header-search-input" %>

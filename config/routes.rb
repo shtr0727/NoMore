@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   # Application routes
   get "home", to: "homes#index"
   resources :posts
+  resources :users, only: [:show, :edit, :update]
 end

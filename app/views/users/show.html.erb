@@ -1,0 +1,18 @@
+<h1>マイページ</h1>
+
+<p>自己紹介: <%= @user.profile %></p>
+
+<%= link_to "プロフィールを編集する", edit_user_path(@user) %>
+
+<h2>あなたの投稿</h2>
+<div id="user_posts">
+  <% @posts.each do |post| %>
+    <div>
+      <h3><%= link_to post.post, post_path(post) %></h3>
+      <p><%= post.reason %></p>
+      <p>カテゴリー: <%= post.category.name if post.category %></p>
+      <p>作成日: <%= l post.created_at, format: :long %></p>
+    </div>
+    <hr>
+  <% end %>
+</div>
