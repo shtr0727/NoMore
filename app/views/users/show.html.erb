@@ -1,9 +1,12 @@
-<h1>マイページ</h1>
+<h1><%= @user.name %>さんのページ</h1>
 
 <p>自己紹介: <%= @user.profile %></p>
 
-<%= link_to "プロフィールを編集する", edit_user_path(@user) %>
+<%= link_to "プロフィール編集", edit_user_path(@user) %>
 <%= link_to "アカウント設定", edit_user_registration_path %>
+<% if user_signed_in? && current_user == @user %>
+  <%= link_to "あなたの下書き投稿", drafts_posts_path %>
+<% end %>
 
 <h2>あなたの投稿</h2>
 <div id="user_posts">

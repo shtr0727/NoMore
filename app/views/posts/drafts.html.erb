@@ -1,0 +1,21 @@
+<h1>あなたの下書き投稿</h1>
+
+<% if @draft_posts.present? %>
+  <ul>
+    <% @draft_posts.each do |post| %>
+      <li>
+        <h3><%= link_to post.post, post_path(post) %></h3>
+        <p>理由: <%= post.reason %></p>
+        <p>カテゴリー: <%= post.category&.name %></p>
+        <p>作成日: <%= l post.created_at, format: :long %></p>
+        <%= link_to '編集', edit_post_path(post) %>
+        <%= link_to '削除', post_path(post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
+      </li>
+      <hr>
+    <% end %>
+  </ul>
+<% else %>
+  <p>下書き投稿はありません。</p>
+<% end %>
+
+<%= link_to 'マイページに戻る', user_path(current_user) %>

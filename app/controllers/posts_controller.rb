@@ -43,6 +43,10 @@ class PostsController < ApplicationController
     redirect_to home_path, notice: '投稿が削除されました'
   end
 
+  def drafts
+    @draft_posts = current_user.posts.where(is_draft: true).order(created_at: :desc)
+  end
+
   private
 
   def set_post
