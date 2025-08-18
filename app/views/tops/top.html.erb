@@ -2,7 +2,11 @@
   <h1>やめたい習慣を手放すSNS「No More」</h1>
   <p>「やらない」を選んで、自分らしい毎日を。</p>
   <div class="lp-btn-group">
-    <%= link_to "新規登録", new_user_registration_path, class: "lp-btn" %>
+    <% if user_signed_in? %>
+      <%= link_to "ホームへ", home_path, class: "lp-btn" %>
+    <% else %>
+      <%= link_to "新規登録", new_user_registration_path, class: "lp-btn" %>
+    <% end %>
   </div>
 </div>
 
@@ -62,5 +66,9 @@
 
 <div class="lp-cta">
   <h2>あなたもNo Moreで「やらない」を始めてみませんか？</h2>
-  <%= link_to "今すぐ始める", new_user_registration_path, class: "lp-btn" %>
+  <% if user_signed_in? %>
+    <%= link_to "ホームへ", home_path, class: "lp-btn" %>
+  <% else %>
+    <%= link_to "今すぐ始める", new_user_registration_path, class: "lp-btn" %>
+  <% end %>
 </div> 
