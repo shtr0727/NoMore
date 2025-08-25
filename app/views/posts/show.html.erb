@@ -11,4 +11,8 @@
   <%= link_to '削除', post_path(@post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
 <% end %>
 
-<%= link_to 'ホームに戻る', home_path %>
+<% if @post.is_draft %>
+  <%= link_to '下書き一覧に戻る', drafts_posts_path %>
+<% else %>
+  <%= link_to 'ホームに戻る', home_path %>
+<% end %>
