@@ -33,7 +33,12 @@
   </div>
 
   <div class="actions">
-    <%= form.submit "更新" %>
+    <% if @post.is_draft %>
+      <%= form.submit "下書き保存", name: "commit_draft" %>  
+      <%= form.submit "投稿", name: "commit_publish" %>
+    <% else %>
+      <%= form.submit "更新" %>
+    <% end %>
   </div>
 <% end %>
 

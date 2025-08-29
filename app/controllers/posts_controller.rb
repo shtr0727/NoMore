@@ -30,7 +30,14 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.update(post_params)
+    post_params_with_draft_status = post_params.dup
+    if params[:commit_publish]
+      post_params_with_draft_status[:is_draft] = false
+    elsif params[:commit_draft]
+      post_params_with_draft_status[:is_draft] = true
+    end
+
+    if @post.update(post_params_with_draft_status)
       redirect_to @post, notice: '投稿が更新されました'
     else
       @categories = Category.all # エラー時にもカテゴリを再取得
