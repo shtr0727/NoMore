@@ -1,10 +1,13 @@
 <h1><%= @user.name %>さんのページ</h1>
 
+<%= render 'shared/stats' %>
+<%= render 'follow_form' if user_signed_in? %>
+
 <p>自己紹介: <%= @user.profile %></p>
 
-<%= link_to "プロフィール編集", edit_user_path(@user) %>
-<%= link_to "アカウント設定", edit_user_registration_path %>
 <% if user_signed_in? && current_user == @user %>
+  <%= link_to "プロフィール編集", edit_user_path(@user) %>
+  <%= link_to "アカウント設定", edit_user_registration_path %>
   <%= link_to "あなたの下書き投稿", drafts_posts_path %>
 <% end %>
 
