@@ -8,7 +8,7 @@
 <% if user_signed_in? && current_user == @user %>
   <%= link_to "プロフィール編集", edit_user_path(@user) %>
   <%= link_to "アカウント設定", edit_user_registration_path %>
-  <%= link_to "あなたの下書き投稿", drafts_posts_path %>
+  <%= link_to "下書き一覧", drafts_posts_path %>
 <% end %>
 
 <h2>あなたの投稿</h2>
