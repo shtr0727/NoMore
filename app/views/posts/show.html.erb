@@ -15,5 +15,9 @@
   <%= link_to '下書き一覧へ', drafts_posts_path %>
 <% else %>
   <%= link_to 'ホームへ', home_path %>
-  <%= link_to 'マイページへ', user_path(@post.user) %>
+  <% if user_signed_in? && current_user == @post.user %>
+    <%= link_to 'マイページへ', user_path(current_user) %>
+  <% else %>
+    <%= link_to "#{@post.user.name}さんのページへ", user_path(@post.user) %>
+  <% end %>
 <% end %>
