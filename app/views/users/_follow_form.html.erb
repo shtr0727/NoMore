@@ -1,18 +1,16 @@
 <% unless current_user == @user %>
   <div id="follow_form">
     <% if current_user.following?(@user) %>
-      <%= form_with(model: current_user.active_relationships.find_by(followed_id: @user.id),
-                    data: { turbo_method: :delete }) do |f|
-      %>
-        <%= f.submit "Unfollow", class: "btn" %>
-      <% end %>
+      <%= button_to "フォロー解除", 
+                    relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),
+                    method: :delete,
+                    class: "btn" %>
     <% else %>
-      <%= form_with(model: current_user.active_relationships.build,
-                    data: { turbo_method: :post }) do |f|
-      %>
-        <%= f.hidden_field :followed_id, value: @user.id %>
-        <%= f.submit "Follow", class: "btn btn-primary" %>
-      <% end %>
+      <%= button_to "フォローする",
+                    relationships_path,
+                    params: { relationship: { followed_id: @user.id } },
+                    method: :post,
+                    class: "btn btn-primary" %>
     <% end %>
   </div>
 <% end %>

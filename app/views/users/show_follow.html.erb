@@ -7,8 +7,8 @@
         <div class="default-avatar">画像なし</div>
       <% end %>
       <h1><%= @user.name %></h1>
-      <span><%= link_to "view my profile", @user %></span>
-      <span><b>Posts:</b> <%= @user.posts.count %></span>
+      <span><%= link_to "プロフィールを見る", @user %></span>
+      <span><b>投稿数:</b> <%= @user.posts.count %></span>
     </section>
     <section class="stats">
       <%= render 'shared/stats' %>

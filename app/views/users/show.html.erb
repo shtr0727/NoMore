@@ -11,7 +11,7 @@
   <%= link_to "下書き一覧", drafts_posts_path %>
 <% end %>
 
-<h2>あなたの投稿</h2>
+<h2><%= @user.name %>さんの投稿</h2>
 <div id="user_posts">
   <% @posts.each do |post| %>
     <div>
