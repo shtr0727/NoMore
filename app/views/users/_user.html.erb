@@ -8,24 +8,15 @@
     <h4><%= link_to user.name, user, class: "user-name" %></h4>
     <p class="user-posts-count">投稿数: <%= user.posts.count %></p>
     <% unless current_user == user %>
-      <div class="follow-buttons">
-        <% if current_user.following?(user) %>
-          <%= form_with(model: current_user.active_relationships.find_by(followed_id: user.id),
-                        method: :delete,
-                        local: true,
-                        class: "follow-form") do |f| %>
-            <%= f.submit "Unfollow", class: "btn btn-sm" %>
+      <% if defined?(@title) && @title == "フォロワー" %>
+        <div class="follow-status">
+          <% if current_user.following?(user) %>
+            <span class="following-indicator">フォロー中</span>
+          <% else %>
+            <span class="not-following-indicator">未フォロー</span>
           <% end %>
-        <% else %>
-          <%= form_with(model: current_user.active_relationships.build,
-                        url: relationships_path,
-                        local: true,
-                        class: "follow-form") do |f| %>
-            <%= f.hidden_field :followed_id, value: user.id %>
-            <%= f.submit "Follow", class: "btn btn-primary btn-sm" %>
-          <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </li>
