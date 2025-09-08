@@ -6,6 +6,8 @@
 <p><strong>カテゴリ:</strong> <%= @post.category&.name %></p>
 <p><strong>日付:</strong> <%= @post.recorded_on %></p>
 
+<%= render 'shared/favorite_button', post: @post %>
+
 <% if user_signed_in? && current_user == @post.user %>
   <%= link_to '編集', edit_post_path(@post) %>
   <%= link_to '削除', post_path(@post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>

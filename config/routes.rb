@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     collection do
       get 'drafts'
     end
+    resource :favorite, only: [:create, :destroy]
   end
   resources :users do
     member do

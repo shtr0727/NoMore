@@ -19,6 +19,7 @@
       <p><%= post.reason %></p>
       <p>カテゴリー: <%= post.category.name if post.category %></p>
       <p>作成日: <%= l post.recorded_on, format: :long %></p>
+      <%= render 'shared/favorite_button', post: post %>
     </div>
     <hr>
   <% end %>

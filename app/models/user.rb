@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :favorited_posts, through: :favorites, source: :post
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
@@ -30,5 +31,20 @@ class User < ApplicationRecord
   # 現在のユーザーが他のユーザーをフォローしている場合はtrueを返す
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  # 投稿をいいねする
+  def favorite(post)
+    favorites.create(post: post) unless favorited?(post)
+  end
+
+  # 投稿のいいねを解除する
+  def unfavorite(post)
+    favorites.find_by(post: post)&.destroy
+  end
+
+  # 投稿をいいねしているかチェック
+  def favorited?(post)
+    favorites.exists?(post: post)
   end
 end

@@ -1,0 +1,17 @@
+<div class="favorite-button">
+  <% if user_signed_in? %>
+    <% if current_user.favorited?(post) %>
+      <%= link_to post_favorite_path(post), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" do %>
+        ❤️ <%= post.favorites.count %>
+      <% end %>
+    <% else %>
+      <%= link_to post_favorite_path(post), data: { turbo_method: :post }, class: "btn btn-outline-danger btn-sm" do %>
+        🤍 <%= post.favorites.count %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <span class="btn btn-outline-secondary btn-sm disabled">
+      🤍 <%= post.favorites.count %>
+    </span>
+  <% end %>
+</div>
