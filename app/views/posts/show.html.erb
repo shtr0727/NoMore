@@ -4,7 +4,7 @@
 <p><strong>理由:</strong> <%= @post.reason %></p>
 <p><strong>投稿者:</strong> <%= @post.user.name %></p>
 <p><strong>カテゴリ:</strong> <%= @post.category&.name %></p>
-<p><strong>日付:</strong> <%= @post.recorded_on %></p>
+<p><strong>日付:</strong> <%= l @post.recorded_on, format: :japanese %></p>
 
 <%= render 'shared/favorite_button', post: @post %>
 

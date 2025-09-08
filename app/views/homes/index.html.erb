@@ -7,7 +7,7 @@
         投稿者: <%= post.user.name %><br>
         理由: <%= post.reason %><br>
         カテゴリ: <%= post.category&.name %><br>
-        日付: <%= post.recorded_on %><br>
+        日付: <%= l post.recorded_on, format: :japanese %><br>
         <%= render 'shared/favorite_button', post: post %>
       </li>
     <% end %>

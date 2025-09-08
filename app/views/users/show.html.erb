@@ -18,7 +18,7 @@
       <h3><%= link_to post.post, post_path(post) %></h3>
       <p><%= post.reason %></p>
       <p>カテゴリー: <%= post.category.name if post.category %></p>
-      <p>作成日: <%= l post.recorded_on, format: :long %></p>
+      <p>作成日: <%= l post.recorded_on, format: :japanese %></p>
       <%= render 'shared/favorite_button', post: post %>
     </div>
     <hr>

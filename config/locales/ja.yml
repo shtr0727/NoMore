@@ -1,0 +1,7 @@
+ja:
+  date:
+    formats:
+      japanese: "%Y年%m月%d日"
+  time:
+    formats:
+      japanese: "%Y年%m月%d日"
