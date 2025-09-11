@@ -13,6 +13,65 @@
   <%= link_to '削除', post_path(@post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
 <% end %>
 
+<!-- コメント一覧 -->
+<div class="comments-section">
+  <h3>コメント (<%= @comments.count %>)</h3>
+  
+  <% if @comments.any? %>
+    <div class="comments-list">
+      <% @comments.each do |comment| %>
+        <div class="comment">
+          <div class="comment-header">
+            <strong><%= comment.user.name %></strong>
+            <span class="comment-date"><%= l comment.created_at, format: :long %></span>
+            <% if user_signed_in? && (current_user == comment.user || current_user == @post.user) %>
+              <%= link_to '削除', post_comment_path(@post, comment), 
+                          data: { turbo_method: :delete, turbo_confirm: 'コメントを削除しますか？' },
+                          class: 'comment-delete' %>
+            <% end %>
+          </div>
+          <div class="comment-content">
+            <%= simple_format(comment.content) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="no-comments">まだコメントがありません。</p>
+  <% end %>
+
+  <!-- コメント投稿フォーム -->
+  <% if user_signed_in? %>
+    <div class="comment-form">
+      <h4>コメントを投稿</h4>
+      <%= form_with model: [@post, @comment], local: true do |f| %>
+        <% if @comment.errors.any? %>
+          <div class="error-messages">
+            <ul>
+              <% @comment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        
+        <div class="form-group">
+          <%= f.text_area :content, placeholder: "コメントを入力してください", rows: 3, required: true %>
+          <small class="form-text">最大500文字まで</small>
+        </div>
+        
+        <div class="form-actions">
+          <%= f.submit 'コメントを投稿', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="login-prompt">
+      <%= link_to 'ログイン', new_user_session_path %>してコメントを投稿
+    </p>
+  <% end %>
+</div>
+
 <% if @post.is_draft %>
   <%= link_to '下書き一覧へ', drafts_posts_path %>
 <% else %>

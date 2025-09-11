@@ -22,6 +22,8 @@ class PostsController < ApplicationController
 
   def show
     # @post は set_post で設定済み
+    @comments = @post.comments.includes(:user).order(created_at: :asc)
+    @comment = Comment.new
   end
 
   def edit
