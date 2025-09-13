@@ -1,17 +1,32 @@
 <h1>ホーム</h1>
-<p>Find me in app/views/homes/index.html.erb</p><% if @posts.present? %>
-  <ul>
+
+<% if @posts.present? %>
+  <div class="posts-grid" style="display: grid; gap: 20px;">
     <% @posts.each do |post| %>
-      <li>
-        <strong><%= link_to post.post, post_path(post) %></strong><br>
-        投稿者: <%= post.user.name %><br>
-        理由: <%= post.reason %><br>
-        カテゴリ: <%= post.category&.name %><br>
-        日付: <%= l post.recorded_on, format: :japanese %><br>
-        <%= render 'shared/favorite_button', post: post %>
-      </li>
+      <div class="post-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: white;">
+        <div class="post-header" style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+          <div>
+            <strong><%= link_to post.post, post_path(post), style: "text-decoration: none; color: #333;" %></strong>
+          </div>
+          <div class="streak-badge" style="background: <%= post.streak_status == Streak::STATUS_ACTIVE ? '#4caf50' : '#f44336' %>; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8em;">
+            🔥 <%= post.streak_count %>日
+            <%= post.streak_status == Streak::STATUS_ACTIVE ? '継続中' : 'リセット済み' %>
+          </div>
+        </div>
+        
+        <div class="post-details" style="font-size: 0.9em; color: #666; line-height: 1.4;">
+          <p><strong>投稿者:</strong> <%= post.user.name %></p>
+          <p><strong>理由:</strong> <%= post.reason %></p>
+          <p><strong>カテゴリ:</strong> <%= post.category&.name %></p>
+          <p><strong>日付:</strong> <%= l post.recorded_on, format: :japanese %></p>
+        </div>
+        
+        <div class="post-actions" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+          <%= render 'shared/favorite_button', post: post %>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
   <%= paginate @posts %>
 <% else %>
   <p>投稿がありません。</p>

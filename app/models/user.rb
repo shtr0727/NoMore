@@ -16,6 +16,7 @@ class User < ApplicationRecord
                                    dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :streaks, dependent: :destroy
   has_one_attached :profile_image
 
   # ユーザーをフォローする
@@ -47,4 +48,5 @@ class User < ApplicationRecord
   def favorited?(post)
     favorites.exists?(post: post)
   end
+
 end

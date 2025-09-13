@@ -5,15 +5,16 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     @categories = Category.all
-    @streaks = Streak.all # 必要に応じてcurrent_userのstreaksに変更可
   end
 
   def create
     @post = Post.new(post_params)
     @post.user = current_user
     @categories = Category.all
-    @streaks = Streak.all
+    
     if @post.save
+      # 投稿作成時にその投稿のストリークを作成
+      @post.current_streak
       redirect_to home_path, notice: '投稿が作成されました'
     else
       render :new, status: :unprocessable_entity
@@ -39,8 +40,22 @@ class PostsController < ApplicationController
       post_params_with_draft_status[:is_draft] = true
     end
 
+    # うっかりリセットがチェックされている場合、recorded_onを今日の日付に変更
+    if params[:post][:reset_streak] == "true"
+      post_params_with_draft_status[:recorded_on] = Date.current
+    end
+
+    # reset_streakはPostの属性ではないので除外
+    post_params_with_draft_status.delete(:reset_streak)
+
     if @post.update(post_params_with_draft_status)
-      redirect_to @post, notice: '投稿が更新されました'
+      # チェックボックスがチェックされている場合、ストリークをリセット
+      if params[:post][:reset_streak] == "true"
+        @post.reset_streak!
+        redirect_to @post, notice: '投稿が更新されました（継続記録をリセットしました）'
+      else
+        redirect_to @post, notice: '投稿が更新されました'
+      end
     else
       @categories = Category.all # エラー時にもカテゴリを再取得
       render :edit, status: :unprocessable_entity
@@ -56,6 +71,7 @@ class PostsController < ApplicationController
     @draft_posts = current_user.posts.where(is_draft: true).order(created_at: :desc)
   end
 
+
   private
 
   def set_post
@@ -63,6 +79,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on)
+    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on, :reset_streak)
   end
 end
