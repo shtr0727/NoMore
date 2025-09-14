@@ -25,14 +25,23 @@ class PostsController < ApplicationController
     # @post は set_post で設定済み
     @comments = @post.comments.includes(:user).order(created_at: :asc)
     @comment = Comment.new
+    
+    # ストリークが存在しない場合は作成
+    @post.current_streak
   end
 
   def edit
     # @post は set_post で設定済み
     @categories = Category.all
+    
+    # ストリークが存在しない場合は作成
+    @post.current_streak
   end
 
   def update
+    # 変更前のrecorded_onを保存（日付変更の検知用）
+    original_recorded_on = @post.recorded_on
+    
     post_params_with_draft_status = post_params.dup
     if params[:commit_publish]
       post_params_with_draft_status[:is_draft] = false
@@ -45,16 +54,33 @@ class PostsController < ApplicationController
       post_params_with_draft_status[:recorded_on] = Date.current
     end
 
-    # reset_streakはPostの属性ではないので除外
+    # reset_streakとrestore_streakはPostの属性ではないので除外
     post_params_with_draft_status.delete(:reset_streak)
+    post_params_with_draft_status.delete(:restore_streak)
 
     if @post.update(post_params_with_draft_status)
-      # チェックボックスがチェックされている場合、ストリークをリセット
+      # チェックボックスがチェックされている場合の処理
       if params[:post][:reset_streak] == "true"
         @post.reset_streak!
         redirect_to @post, notice: '投稿が更新されました（継続記録をリセットしました）'
+      elsif params[:post][:restore_streak] == "true"
+        @post.current_streak.continue!
+        redirect_to @post, notice: '投稿が更新されました（継続記録を復活させました）'
       else
-        redirect_to @post, notice: '投稿が更新されました'
+        # recorded_onが変更された場合、ストリークの基準日も更新
+        if original_recorded_on != @post.recorded_on
+          Rails.logger.info "DEBUG: recorded_on changed from #{original_recorded_on} to #{@post.recorded_on}"
+          Rails.logger.info "DEBUG: Before update - streak date: #{@post.streak&.date}"
+          @post.update_streak_date!
+          @post.reload # データベースから最新の状態を取得
+          Rails.logger.info "DEBUG: After update - streak date: #{@post.streak&.date}"
+          Rails.logger.info "DEBUG: Streak count: #{@post.streak_count}"
+        end
+        notice_message = '投稿が更新されました'
+        if original_recorded_on != @post.recorded_on
+          notice_message += "（日付が#{original_recorded_on}から#{@post.recorded_on}に変更され、継続日数は#{@post.streak_count}日になりました）"
+        end
+        redirect_to @post, notice: notice_message
       end
     else
       @categories = Category.all # エラー時にもカテゴリを再取得
@@ -79,6 +105,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on, :reset_streak)
+    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on, :reset_streak, :restore_streak)
   end
 end

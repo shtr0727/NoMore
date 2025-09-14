@@ -1,21 +1,32 @@
 <h1>投稿の編集</h1>
 
 <!-- ストリーク情報表示 -->
-<% if @post.streak %>
-  <div class="streak-info" style="background-color: #f0f8ff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd;">
-    <h3 style="margin-top: 0;">📈 現在の継続状況</h3>
-    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-      <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
-           background-color: <%= @post.streak.status == Streak::STATUS_ACTIVE ? '#4caf50' : '#f44336' %>; 
-           color: white;">
-        <%= @post.streak.status == Streak::STATUS_ACTIVE ? '🔥' : '💔' %> 
-        <%= @post.streak_count %>日 <%= @post.streak.status %>
-      </div>
-      <div style="font-size: 0.9em; color: #666;">
-        開始日: <%= l @post.streak.date, format: :japanese %>
+<% begin %>
+  <% streak = @post.current_streak %>
+  <% if streak %>
+    <% streak_count = @post.streak_count %>
+    <div class="streak-info" style="background-color: #f0f8ff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd;">
+      <h3 style="margin-top: 0;">📈 現在の継続状況</h3>
+      <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+        <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
+             background-color: <%= streak_count > 0 ? '#4caf50' : '#f44336' %>; 
+             color: white;">
+          <%= streak_count > 0 ? '🔥' : '💔' %> 
+          <%= streak_count > 0 ? "#{streak_count}日継続中" : "うっかり" %>
+        </div>
+        <div style="font-size: 0.9em; color: #666;">
+          開始日: <%= l @post.recorded_on, format: :japanese %>
+        </div>
       </div>
     </div>
-    
+  <% else %>
+    <div style="background-color: #fff3cd; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ffeaa7;">
+      <p>ストリーク情報が見つかりません。この投稿を一度更新すると作成されます。</p>
+    </div>
+  <% end %>
+<% rescue => e %>
+  <div style="background-color: #f8d7da; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #f5c6cb;">
+    <p>ストリーク情報の取得でエラーが発生しました: <%= e.message %></p>
   </div>
 <% end %>
 
@@ -51,13 +62,21 @@
     <%= form.date_field :recorded_on %>
   </div>
 
-  <!-- うっかりリセットチェックボックス -->
-  <% if @post.streak&.status == Streak::STATUS_ACTIVE %>
+  <!-- ストリーク状態コントロール -->
+  <% if @post.streak&.current_count > 0 %>
     <div class="field" style="background-color: #ffe6e6; padding: 15px; border-radius: 5px; border: 1px solid #ffcccc; margin: 15px 0;">
       <%= form.check_box :reset_streak, {}, "true", "false" %>
       <%= form.label :reset_streak, "この投稿をうっかりリセットする", style: "color: #d32f2f; font-weight: bold;" %>
       <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
         ※ チェックすると、投稿更新時に継続記録がリセットされ、日付が今日に変更されます
+      </div>
+    </div>
+  <% elsif @post.streak&.current_count == 0 %>
+    <div class="field" style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; border: 1px solid #a5d6a7; margin: 15px 0;">
+      <%= form.check_box :restore_streak, {}, "true", "false" %>
+      <%= form.label :restore_streak, "継続記録を復活させる", style: "color: #2e7d32; font-weight: bold;" %>
+      <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
+        ※ チェックすると、「うっかり」状態から継続中に戻ります
       </div>
     </div>
   <% end %>

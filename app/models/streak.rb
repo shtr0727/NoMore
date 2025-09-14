@@ -10,11 +10,11 @@ class Streak < ApplicationRecord
   
   # 現在の継続日数を計算（投稿ごと）
   def current_count
-    return 0 if status == STATUS_BROKEN
+    # 投稿の記録日から今日まで、その習慣を継続した日数
+    start_date = date || (post&.recorded_on) || Date.current
+    today = Date.current
     
-    # 投稿作成日から今日まで、その習慣を継続した日数
-    # dateは投稿の記録日（recorded_on）が設定されている
-    days_since_start = (Date.current - date).to_i + 1
+    days_since_start = (today - start_date).to_i + 1
     [days_since_start, 0].max
   end
   
@@ -30,5 +30,15 @@ class Streak < ApplicationRecord
     # 元の投稿日に戻して継続状態にする
     original_date = post&.recorded_on || date
     update!(status: STATUS_ACTIVE, date: original_date)
+  end
+  
+  # 投稿の日付変更に合わせてストリークの基準日を更新
+  def update_date_from_post!
+    return unless post&.recorded_on
+    
+    Rails.logger.info "DEBUG: Updating streak date from #{date} to #{post.recorded_on}"
+    # recorded_onが変更された場合は、継続状態を維持したまま基準日を更新
+    update!(date: post.recorded_on)
+    Rails.logger.info "DEBUG: Streak date updated to #{reload.date}"
   end
 end
