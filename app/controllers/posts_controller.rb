@@ -54,18 +54,14 @@ class PostsController < ApplicationController
       post_params_with_draft_status[:recorded_on] = Date.current
     end
 
-    # reset_streakとrestore_streakはPostの属性ではないので除外
+    # reset_streakはPostの属性ではないので除外
     post_params_with_draft_status.delete(:reset_streak)
-    post_params_with_draft_status.delete(:restore_streak)
 
     if @post.update(post_params_with_draft_status)
       # チェックボックスがチェックされている場合の処理
       if params[:post][:reset_streak] == "true"
         @post.reset_streak!
         redirect_to @post, notice: '投稿が更新されました（継続記録をリセットしました）'
-      elsif params[:post][:restore_streak] == "true"
-        @post.current_streak.continue!
-        redirect_to @post, notice: '投稿が更新されました（継続記録を復活させました）'
       else
         # recorded_onが変更された場合、ストリークの基準日も更新
         if original_recorded_on != @post.recorded_on
@@ -105,6 +101,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on, :reset_streak, :restore_streak)
+    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on, :reset_streak)
   end
 end

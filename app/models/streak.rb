@@ -10,11 +10,14 @@ class Streak < ApplicationRecord
   
   # 現在の継続日数を計算（投稿ごと）
   def current_count
-    # 投稿の記録日から今日まで、その習慣を継続した日数
+    # 投稿の記録日から今日まで、その習慣を継続した日数（当日は含めない）
     start_date = date || (post&.recorded_on) || Date.current
     today = Date.current
     
-    days_since_start = (today - start_date).to_i + 1
+    # 未来の日付の場合は0を返す
+    return 0 if start_date > today
+    
+    days_since_start = (today - start_date).to_i
     [days_since_start, 0].max
   end
   
@@ -25,12 +28,6 @@ class Streak < ApplicationRecord
     update!(status: STATUS_BROKEN, date: reset_date)
   end
   
-  # ストリークを継続（継続中状態にする）
-  def continue!
-    # 元の投稿日に戻して継続状態にする
-    original_date = post&.recorded_on || date
-    update!(status: STATUS_ACTIVE, date: original_date)
-  end
   
   # 投稿の日付変更に合わせてストリークの基準日を更新
   def update_date_from_post!
