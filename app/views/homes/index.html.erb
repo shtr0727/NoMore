@@ -8,9 +8,15 @@
           <div>
             <strong><%= link_to post.post, post_path(post), style: "text-decoration: none; color: #333;" %></strong>
           </div>
-          <div class="streak-badge" style="background: <%= post.streak_status == Streak::STATUS_ACTIVE ? '#4caf50' : '#f44336' %>; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8em;">
-            🔥 <%= post.streak_count %>日
-            <%= post.streak_status == Streak::STATUS_ACTIVE ? '継続中' : 'リセット済み' %>
+          <% streak_count = post.streak_count %>
+          <div class="streak-badge" style="background: <%= post.recorded_on > Date.current ? '#ff9800' : (streak_count > 0 ? '#4caf50' : '#f44336') %>; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8em;">
+            <% if post.recorded_on > Date.current %>
+              ⏰ 未来の投稿
+            <% elsif streak_count > 0 %>
+              🔥 <%= streak_count %>日継続中
+            <% else %>
+              💔 うっかり
+            <% end %>
           </div>
         </div>
         
