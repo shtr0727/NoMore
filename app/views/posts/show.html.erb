@@ -15,7 +15,7 @@
       <h4 style="margin-top: 0;">📈 継続状況</h4>
       <div style="display: flex; align-items: center; gap: 15px;">
         <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
-             background-color: <%= @post.recorded_on > Date.current ? '#ff9800' : (streak_count > 0 ? '#4caf50' : '#f44336') %>; 
+             background-color: <%= @post.recorded_on > Date.current ? '#ff9800' : (streak_count > 0 ? '#4caf50' : '#87ceeb') %>; 
              color: white;">
           <% if @post.recorded_on > Date.current %>
             ⏰ 未来の投稿
