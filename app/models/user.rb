@@ -49,4 +49,33 @@ class User < ApplicationRecord
     favorites.exists?(post: post)
   end
 
+  # ユーザーが現在獲得しているバッジ（動的計算）
+  def earned_badges
+    badge_ids = posts.map(&:current_badges).flatten.map(&:id).uniq
+    Badge.where(id: badge_ids).order(:required_days)
+  end
+  
+  # 継続日数バッジのみ
+  def streak_badges
+    earned_badges.where(badge_type: 'streak')
+  end
+  
+  # 現在最も高いバッジ
+  def highest_badge
+    earned_badges.order(:required_days).last
+  end
+  
+  # 最高継続日数（ステータスに関係なく）
+  def max_streak_count
+    posts.joins(:streak)
+         .maximum('streaks.current_count') || 0
+  end
+  
+  # 現在継続中の習慣数
+  def active_streaks_count
+    posts.joins(:streak)
+         .select { |post| post.streak_active? }
+         .count
+  end
+
 end

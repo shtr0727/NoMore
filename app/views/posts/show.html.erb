@@ -41,6 +41,76 @@
   </div>
 <% end %>
 
+<!-- バッジセクション（常に表示） -->
+<div class="post-badges" style="background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); padding: 15px; margin: 15px 0; border-radius: 8px; color: white;">
+  <h4 style="margin: 0 0 15px 0; display: flex; align-items: center; gap: 8px;">
+    🏆 継続日数バッジ
+  </h4>
+  
+  <% if @post.badges.any? %>
+    <!-- 継続日数に応じたバッジ -->
+    <div style="margin-bottom: 15px;">
+      <div style="font-size: 0.9em; margin-bottom: 8px; opacity: 0.9;">
+        <% if @post.streak_active? %>
+          ✅ 現在獲得中
+        <% else %>
+          🏆 継続記録により獲得
+        <% end %>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <% @post.badges.each do |badge| %>
+          <div style="background: <%= @post.streak_active? ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.2)' %>; padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); border: 2px solid <%= @post.streak_active? ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.3)' %>; <%= @post.streak_active? ? '' : 'opacity: 0.8;' %>">
+            <span style="font-weight: bold;"><%= badge.name %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  
+  <!-- 次の目標バッジ -->
+  <% 
+    current_streak_count = @post.streak_count
+    current_badge_ids = @post.badges.pluck(:id)
+    next_badge = Badge.streak_badges.where.not(id: current_badge_ids).where('required_days > ?', current_streak_count).order(:required_days).first
+    available_badges = Badge.streak_badges.where.not(id: current_badge_ids).where('required_days > ?', current_streak_count).order(:required_days).limit(3)
+  %>
+  
+  
+  <% if next_badge || available_badges.any? %>
+    <div>
+      <div style="font-size: 0.9em; margin-bottom: 8px; opacity: 0.9;">
+        <% if @post.streak_active? %>
+          🎯 次の目標 (現在 <%= current_streak_count %>日継続中)
+        <% else %>
+          🎯 次の目標 (記録: <%= current_streak_count %>日継続)
+        <% end %>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <% if next_badge %>
+          <div style="background: rgba(255,255,255,0.1); padding: 10px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; border: 2px dashed rgba(255,255,255,0.5);">
+            <span style="font-weight: bold; opacity: 0.8;"><%= next_badge.name %></span>
+            <span style="font-size: 0.8em; opacity: 0.7;">あと<%= next_badge.required_days - current_streak_count %>日</span>
+          </div>
+        <% end %>
+        <% available_badges.where.not(id: next_badge&.id).limit(2).each do |badge| %>
+          <div style="background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 15px; display: flex; align-items: center; gap: 6px; border: 1px dashed rgba(255,255,255,0.3);">
+            <span style="font-size: 0.9em; opacity: 0.7;"><%= badge.name %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div style="text-align: center; padding: 20px; opacity: 0.8;">
+      <div style="font-size: 1.2em; margin-bottom: 8px;">🎉</div>
+      <% if current_streak_count > 0 %>
+        <div style="font-size: 0.9em;">最高レベルに到達！継続を続けましょう！</div>
+      <% else %>
+        <div style="font-size: 0.9em;">継続を開始してバッジを獲得しましょう！</div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
 <%= render 'shared/favorite_button', post: @post %>
 
 <% if user_signed_in? && current_user == @post.user %>

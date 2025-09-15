@@ -31,6 +31,55 @@
 
 <p>自己紹介: <%= @user.profile %></p>
 
+<!-- バッジセクション -->
+<% if @user.earned_badges.any? %>
+  <div class="badges-section" style="margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
+    <h3 style="margin: 0 0 20px 0; text-align: center; font-size: 1.5em;">🏆 獲得バッジ</h3>
+    
+    <!-- 継続統計 -->
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+      <div style="text-align: center;">
+        <div style="font-size: 1.8em; font-weight: bold;"><%= @user.max_streak_count %></div>
+        <div style="font-size: 0.9em; opacity: 0.9;">最高継続日数</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 1.8em; font-weight: bold;"><%= @user.active_streaks_count %></div>
+        <div style="font-size: 0.9em; opacity: 0.9;">継続中の習慣</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 1.8em; font-weight: bold;"><%= @user.earned_badges.count %></div>
+        <div style="font-size: 0.9em; opacity: 0.9;">獲得バッジ</div>
+      </div>
+    </div>
+    
+    <!-- バッジ一覧（現在の継続状況に基づく） -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+      <% @user.earned_badges.each do |badge| %>
+        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+          <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <div>
+              <div style="font-weight: bold; font-size: 1.1em;"><%= badge.name %></div>
+              <% if badge.streak_badge? %>
+                <div style="font-size: 0.8em; opacity: 0.8;"><%= badge.required_days %>日継続バッジ</div>
+              <% end %>
+            </div>
+          </div>
+          <p style="margin: 0 0 10px 0; font-size: 0.9em; line-height: 1.4; opacity: 0.9;"><%= badge.description %></p>
+          <div style="font-size: 0.8em; opacity: 0.7; text-align: right;">
+            現在の継続により獲得中
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div style="text-align: center; margin: 30px 0; padding: 30px; background: #f8f9fa; border-radius: 12px; color: #666;">
+    <div style="font-size: 3em; margin-bottom: 15px;">🏆</div>
+    <h3 style="margin: 0 0 10px 0; color: #333;">まだバッジを獲得していません</h3>
+    <p style="margin: 0;">継続を重ねてバッジを獲得しましょう！</p>
+  </div>
+<% end %>
+
 <% if user_signed_in? && current_user == @user %>
   <%= link_to "プロフィール編集", edit_user_path(@user) %>
   <%= link_to "アカウント設定", edit_user_registration_path %>

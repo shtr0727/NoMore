@@ -150,3 +150,59 @@ not_doing_posts.each do |post_data|
 end
 
 puts "#{not_doing_posts.length}件の「やらないこと」のサンプル投稿を作成しました。"
+
+# 継続日数バッジの作成
+streak_badges_data = [
+  {
+    name: "🔥 3日継続",
+    description: "素晴らしい始まりです！3日間の継続を達成しました。継続は力なり！",
+    badge_type: "streak",
+    required_days: 3
+  },
+  {
+    name: "⭐ 1週間継続",
+    description: "1週間の継続達成！新しい習慣が身につき始めています。この調子で頑張りましょう！",
+    badge_type: "streak", 
+    required_days: 7
+  },
+  {
+    name: "💪 2週間継続",
+    description: "2週間継続おめでとうございます！習慣化への道のりを着実に歩んでいます。",
+    badge_type: "streak",
+    required_days: 14
+  },
+  {
+    name: "🌟 1ヶ月継続",
+    description: "1ヶ月継続の大台達成！もはや習慣として定着していますね。素晴らしい努力です！",
+    badge_type: "streak",
+    required_days: 30
+  },
+  {
+    name: "🏆 50日継続",
+    description: "50日継続という素晴らしい記録！あなたの意志の強さと継続力に敬服します。",
+    badge_type: "streak",
+    required_days: 50
+  },
+  {
+    name: "💎 100日継続",
+    description: "100日継続という偉業達成！あなたは真の継続マスターです。多くの人の憧れの存在ですね！",
+    badge_type: "streak",
+    required_days: 100
+  },
+  {
+    name: "👑 1年継続",
+    description: "365日継続という伝説的な記録！あなたの継続力は多くの人にとってのインスピレーションです。",
+    badge_type: "streak",
+    required_days: 365
+  }
+]
+
+streak_badges_data.each do |badge_data|
+  Badge.find_or_create_by!(name: badge_data[:name]) do |badge|
+    badge.description = badge_data[:description]
+    badge.badge_type = badge_data[:badge_type]
+    badge.required_days = badge_data[:required_days]
+  end
+end
+
+puts "#{streak_badges_data.length}個の継続日数バッジを作成しました。"
