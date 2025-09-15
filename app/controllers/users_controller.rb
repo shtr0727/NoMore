@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def index
+    @users = User.includes(:posts, :following, :followers).order(:name)
+  end
+
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.where(is_draft: false).order(created_at: :desc)

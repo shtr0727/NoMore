@@ -22,8 +22,21 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
-  /* 暗いグレーに */
   text-decoration: none;
+  padding: 0.5rem 1.2rem;
+  background: #e0e0e0;
+  /* 他のヘッダーボタンと同じ明るいグレー */
+  border-radius: 25px;
+  /* 他のヘッダーボタンと同じ角丸 */
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #d0d0d0;
+    /* 他のヘッダーボタンと同じホバー効果 */
+  }
 }
 
 .header-nav {
