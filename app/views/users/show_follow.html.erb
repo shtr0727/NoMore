@@ -1,24 +1,36 @@
 <div class="row">
   <aside class="col-md-4">
-    <section class="user_info">
-      <% if @user.profile_image.attached? %>
-        <%= image_tag @user.profile_image, alt: @user.name, class: "profile-image" %>
-      <% else %>
-        <div class="default-avatar">画像なし</div>
-      <% end %>
-      <h1><%= @user.name %></h1>
-      <span><%= link_to "プロフィールを見る", @user %></span>
-      <span><b>投稿数:</b> <%= @user.posts.count %></span>
+    <section class="user_info" style="text-align: center; padding: 20px; background: white; border-radius: 10px; border: 1px solid #ddd;">
+      <div style="margin-bottom: 15px;">
+        <% if @user.has_profile_image? %>
+          <%= image_tag @user.profile_image, alt: @user.name, style: "width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #ddd;" %>
+        <% else %>
+          <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px; margin: 0 auto; border: 3px solid #ddd;">
+            <%= @user.name.first.upcase if @user.name.present? %>
+          </div>
+        <% end %>
+      </div>
+      <h1 style="margin: 10px 0;"><%= @user.name %></h1>
+      <div style="margin: 10px 0;">
+        <%= link_to "プロフィールを見る", @user, style: "color: #007bff; text-decoration: none;" %>
+      </div>
+      <div style="font-weight: bold; color: #666;">
+        投稿数: <%= @user.posts.count %>
+      </div>
     </section>
     <section class="stats">
       <%= render 'shared/stats' %>
       <% if @users.any? %>
-        <div class="user_avatars">
+        <div class="user_avatars" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 15px;">
           <% @users.each do |user| %>
-            <% if user.profile_image.attached? %>
-              <%= link_to image_tag(user.profile_image, alt: user.name, size: "30x30", class: "user-avatar"), user %>
-            <% else %>
-              <%= link_to "[画像なし]", user %>
+            <%= link_to user, style: "text-decoration: none;" do %>
+              <% if user.has_profile_image? %>
+                <%= image_tag user.profile_image, alt: user.name, style: "width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;" %>
+              <% else %>
+                <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; border: 2px solid #ddd;">
+                  <%= user.name.first.upcase if user.name.present? %>
+                </div>
+              <% end %>
             <% end %>
           <% end %>
         </div>
@@ -26,12 +38,14 @@
     </section>
   </aside>
   <div class="col-md-8">
-    <h3><%= @title %></h3>
+    <h3 style="margin-bottom: 20px; color: #333;"><%= @title %></h3>
     <% if @users.any? %>
-      <ul class="users follow">
+      <ul class="users follow" style="padding: 0; margin: 0;">
         <%= render @users %>
       </ul>
-      <%= paginate @users %>
+      <div style="margin-top: 20px; text-align: center;">
+        <%= paginate @users %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -4,18 +4,34 @@
   <div class="posts-grid" style="display: grid; gap: 20px;">
     <% @posts.each do |post| %>
       <div class="post-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: white;">
-        <div class="post-header" style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
-          <div>
-            <strong><%= link_to post.post, post_path(post), style: "text-decoration: none; color: #333;" %></strong>
+        <!-- 投稿者情報ヘッダー -->
+        <div class="post-author" style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0;">
+          <% if post.user.has_profile_image? %>
+            <%= image_tag post.user.profile_image, style: "width: 45px; height: 45px; border-radius: 50%; object-fit: cover;" %>
+          <% else %>
+            <div style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+              <%= post.user.name.first.upcase if post.user.name.present? %>
+            </div>
+          <% end %>
+          <div style="flex-grow: 1;">
+            <h4 style="margin: 0; font-size: 1.1em;">
+              <%= link_to post.user.name, user_path(post.user), style: "text-decoration: none; color: #333;" %>
+            </h4>
+            <small style="color: #666;"><%= l post.recorded_on, format: :japanese %></small>
           </div>
           <%= render 'shared/streak_badge', post: post, size: 'medium' %>
         </div>
         
+        <!-- 投稿内容 -->
+        <div class="post-header" style="margin-bottom: 15px;">
+          <div>
+            <strong><%= link_to post.post, post_path(post), style: "text-decoration: none; color: #333; font-size: 1.2em;" %></strong>
+          </div>
+        </div>
+        
         <div class="post-details" style="font-size: 0.9em; color: #666; line-height: 1.4;">
-          <p><strong>投稿者:</strong> <%= post.user.name %></p>
           <p><strong>理由:</strong> <%= post.reason %></p>
           <p><strong>カテゴリ:</strong> <%= post.category&.name %></p>
-          <p><strong>日付:</strong> <%= l post.recorded_on, format: :japanese %></p>
         </div>
         
         <div class="post-actions" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">

@@ -19,6 +19,39 @@ class User < ApplicationRecord
   has_many :streaks, dependent: :destroy
   has_one_attached :profile_image
 
+  # プロフィール画像のバリデーション
+  validate :profile_image_validation
+
+  def profile_image_validation
+    return unless profile_image.attached?
+
+    # ファイルタイプの検証
+    acceptable_types = ["image/jpeg", "image/png", "image/gif"]
+    unless acceptable_types.include?(profile_image.blob.content_type)
+      errors.add(:profile_image, "JPEG、PNG、GIFファイルのみアップロード可能です。")
+    end
+
+    # ファイルサイズの検証
+    if profile_image.blob.byte_size > 5.megabytes
+      errors.add(:profile_image, "ファイルサイズは5MB以下にしてください。")
+    end
+  end
+
+  # プロフィール画像の取得（デフォルト画像を含む）
+  def display_image
+    if profile_image.attached?
+      profile_image
+    else
+      # デフォルト画像のパスを返す（後でCSSで実装）
+      nil
+    end
+  end
+
+  # プロフィール画像が添付されているかチェック
+  def has_profile_image?
+    profile_image.attached?
+  end
+
   # ユーザーをフォローする
   def follow(other_user)
     following << other_user unless self == other_user

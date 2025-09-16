@@ -1,10 +1,25 @@
 <h1>投稿詳細</h1>
 
+<!-- 投稿者情報 -->
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+  <% if @post.user.has_profile_image? %>
+    <%= image_tag @post.user.profile_image, style: "width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" %>
+  <% else %>
+    <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+      <%= @post.user.name.first.upcase if @post.user.name.present? %>
+    </div>
+  <% end %>
+  <div>
+    <h3 style="margin: 0; color: #333;">
+      <%= link_to @post.user.name, user_path(@post.user), style: "text-decoration: none; color: inherit;" %>さんの投稿
+    </h3>
+    <small style="color: #666;"><%= @post.recorded_on ? l(@post.recorded_on, format: :japanese) : '日付が設定されていません' %></small>
+  </div>
+</div>
+
 <p><strong>投稿:</strong> <%= @post.post %></p>
 <p><strong>理由:</strong> <%= @post.reason %></p>
-<p><strong>投稿者:</strong> <%= @post.user.name %></p>
 <p><strong>カテゴリ:</strong> <%= @post.category&.name %></p>
-<p><strong>日付:</strong> <%= @post.recorded_on ? l(@post.recorded_on, format: :japanese) : '日付が設定されていません' %></p>
 
 <!-- ストリーク情報表示 -->
 <% streak_count = @post.streak_count %>
@@ -106,18 +121,34 @@
   <% if @comments.any? %>
     <div class="comments-list">
       <% @comments.each do |comment| %>
-        <div class="comment">
-          <div class="comment-header">
-            <strong><%= comment.user.name %></strong>
-            <span class="comment-date"><%= l comment.created_at, format: :long %></span>
-            <% if user_signed_in? && (current_user == comment.user || current_user == @post.user) %>
-              <%= link_to '削除', post_comment_path(@post, comment), 
-                          data: { turbo_method: :delete, turbo_confirm: 'コメントを削除しますか？' },
-                          class: 'comment-delete' %>
+        <div class="comment" style="display: flex; gap: 12px; margin-bottom: 15px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+          <!-- コメント者のアイコン -->
+          <div style="flex-shrink: 0;">
+            <% if comment.user.has_profile_image? %>
+              <%= image_tag comment.user.profile_image, style: "width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" %>
+            <% else %>
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">
+                <%= comment.user.name.first.upcase if comment.user.name.present? %>
+              </div>
             <% end %>
           </div>
-          <div class="comment-content">
-            <%= simple_format(comment.content) %>
+          
+          <!-- コメント内容 -->
+          <div style="flex-grow: 1;">
+            <div class="comment-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+              <strong>
+                <%= link_to comment.user.name, user_path(comment.user), style: "text-decoration: none; color: #333;" %>
+              </strong>
+              <span class="comment-date" style="color: #666; font-size: 0.9em;"><%= l comment.created_at, format: :long %></span>
+              <% if user_signed_in? && (current_user == comment.user || current_user == @post.user) %>
+                <%= link_to '削除', post_comment_path(@post, comment), 
+                            data: { turbo_method: :delete, turbo_confirm: 'コメントを削除しますか？' },
+                            class: 'comment-delete', style: "color: #dc3545; font-size: 0.9em; text-decoration: none;" %>
+              <% end %>
+            </div>
+            <div class="comment-content">
+              <%= simple_format(comment.content) %>
+            </div>
           </div>
         </div>
       <% end %>

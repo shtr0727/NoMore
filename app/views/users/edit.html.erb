@@ -2,9 +2,32 @@
 
 <%= form_with model: @user, url: user_path(@user), method: :patch, local: true do |f|
 %>
+  <!-- 現在のプロフィール画像表示 -->
+  <div class="field" style="margin-bottom: 20px;">
+    <label>現在のプロフィール画像</label><br />
+    <div style="margin-top: 10px;">
+      <% if @user.has_profile_image? %>
+        <%= image_tag @user.profile_image, style: "width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;" %>
+      <% else %>
+        <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border: 2px solid #ddd; color: #999; font-size: 12px;">
+          No Image
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- プロフィール画像アップロード -->
+  <div class="field" style="margin-bottom: 20px;">
+    <%= f.label :profile_image, "プロフィール画像" %><br />
+    <%= f.file_field :profile_image, accept: "image/*", style: "margin-top: 5px;" %>
+    <small style="display: block; margin-top: 5px; color: #666;">
+      JPEG、PNG、GIFファイルのみ。5MB以下。
+    </small>
+  </div>
+
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
+    <%= f.text_field :name %>
   </div>
 
   <div class="field">

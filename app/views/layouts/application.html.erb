@@ -20,7 +20,16 @@
           <%= link_to "ホーム", home_path, class: "header-btn" %>
           <%= link_to "投稿作成", new_post_path, class: "header-btn" %>
           <%= link_to "ユーザー一覧", users_path, class: "header-btn" %>
-          <%= link_to "マイページ<br>(#{current_user.name}さん)".html_safe, user_path(current_user), class: "header-btn" %>
+          <%= link_to user_path(current_user), class: "header-btn", style: "display: flex; align-items: center; gap: 8px; text-decoration: none;" do %>
+            <% if current_user.has_profile_image? %>
+              <%= image_tag current_user.profile_image, style: "width: 30px; height: 30px; border-radius: 50%; object-fit: cover;" %>
+            <% else %>
+              <div style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">
+                <%= current_user.name.first.upcase if current_user.name.present? %>
+              </div>
+            <% end %>
+            <span>マイページ<br>(<%= current_user.name %>さん)</span>
+          <% end %>
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'header-btn' %>
           <%= form_with url: search_path, method: :get, class: "header-search-form", style: "display:inline;", local: true do |f| %>
             <%= f.text_field :q, placeholder: "投稿・ユーザー検索...", class: "header-search-input", value: params[:q] %>

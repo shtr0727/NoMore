@@ -1,19 +1,23 @@
-<li class="user">
-  <% if user.profile_image.attached? %>
-    <%= image_tag user.profile_image, alt: user.name, size: "50x50", class: "user-avatar" %>
+<li class="user" style="list-style: none; display: flex; align-items: center; gap: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; background: white;">
+  <% if user.has_profile_image? %>
+    <%= image_tag user.profile_image, alt: user.name, style: "width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" %>
   <% else %>
-    <div class="default-avatar-small">画像なし</div>
+    <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+      <%= user.name.first.upcase if user.name.present? %>
+    </div>
   <% end %>
-  <div class="user-info">
-    <h4><%= link_to user.name, user, class: "user-name" %></h4>
-    <p class="user-posts-count">投稿数: <%= user.posts.count %></p>
+  <div class="user-info" style="flex-grow: 1;">
+    <h4 style="margin: 0 0 5px 0; font-size: 1.1em;">
+      <%= link_to user.name, user, style: "text-decoration: none; color: #333;" %>
+    </h4>
+    <p class="user-posts-count" style="margin: 0 0 8px 0; color: #666; font-size: 0.9em;">投稿数: <%= user.posts.count %></p>
     <% unless current_user == user %>
       <% if defined?(@title) && @title == "フォロワー" %>
         <div class="follow-status">
           <% if current_user.following?(user) %>
-            <span class="following-indicator">フォロー中</span>
+            <span class="following-indicator" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8em;">フォロー中</span>
           <% else %>
-            <span class="not-following-indicator">未フォロー</span>
+            <span class="not-following-indicator" style="background: #6c757d; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8em;">未フォロー</span>
           <% end %>
         </div>
       <% end %>
