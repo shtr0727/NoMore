@@ -7,39 +7,26 @@
 <p><strong>日付:</strong> <%= l @post.recorded_on, format: :japanese %></p>
 
 <!-- ストリーク情報表示 -->
-<% begin %>
-  <% streak = @post.current_streak %>
-  <% if streak %>
-    <% streak_count = @post.streak_count %>
-    <div class="streak-info" style="background-color: #f0f8ff; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #ddd;">
-      <h4 style="margin-top: 0;">📈 継続状況</h4>
-      <div style="display: flex; align-items: center; gap: 15px;">
-        <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
-             background-color: <%= @post.recorded_on > Date.current ? '#ff9800' : (streak_count > 0 ? '#4caf50' : '#87ceeb') %>; 
-             color: white;">
-          <% if @post.recorded_on > Date.current %>
-            ⏰ 未来の投稿
-          <% elsif streak_count > 0 %>
-            🔥 <%= streak_count %>日継続中
-          <% else %>
-            💔 うっかり
-          <% end %>
-        </div>
-        <div style="font-size: 0.9em; color: #666;">
-          開始日: <%= l @post.recorded_on, format: :japanese %>
-        </div>
-      </div>
+<% streak_count = @post.streak_count %>
+<div class="streak-info" style="background-color: #f0f8ff; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #ddd;">
+  <h4 style="margin-top: 0;">📈 継続状況</h4>
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
+         background-color: <%= @post.recorded_on > Date.current ? '#ff9800' : (streak_count > 0 ? '#4caf50' : '#87ceeb') %>; 
+         color: white;">
+      <% if @post.recorded_on > Date.current %>
+        ⏰ 未来の投稿
+      <% elsif streak_count > 0 %>
+        🔥 <%= streak_count %>日継続中
+      <% else %>
+        💔 うっかり
+      <% end %>
     </div>
-  <% else %>
-    <div style="background-color: #fff3cd; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #ffeaa7;">
-      <p>ストリーク情報が見つかりません。投稿を編集して更新してください。</p>
+    <div style="font-size: 0.9em; color: #666;">
+      開始日: <%= l @post.recorded_on, format: :japanese %>
     </div>
-  <% end %>
-<% rescue => e %>
-  <div style="background-color: #f8d7da; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #f5c6cb;">
-    <p>ストリーク情報の取得でエラーが発生しました: <%= e.message %></p>
   </div>
-<% end %>
+</div>
 
 <!-- バッジセクション（常に表示） -->
 <div class="post-badges" style="background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); padding: 15px; margin: 15px 0; border-radius: 8px; color: white;">
