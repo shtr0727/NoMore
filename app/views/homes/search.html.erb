@@ -1,0 +1,120 @@
+<h1>検索結果</h1>
+
+<% if @query.present? %>
+  <div class="search-info" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+    <h3 style="margin: 0 0 10px 0;">「<%= @query %>」の検索結果</h3>
+    <p style="margin: 0; color: #666;">
+      投稿 <%= @posts.total_count %>件、ユーザー <%= @users.count %>件が見つかりました
+    </p>
+  </div>
+
+  <!-- 投稿検索結果 -->
+  <% if @posts.any? %>
+    <section class="search-posts" style="margin-bottom: 40px;">
+      <h2>📝 投稿</h2>
+      <div class="posts-grid" style="display: grid; gap: 20px;">
+        <% @posts.each do |post| %>
+          <div class="post-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: white;">
+            <div class="post-header" style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+              <div>
+                <strong><%= link_to post.post, post_path(post), style: "text-decoration: none; color: #333;" %></strong>
+                <!-- 検索語がマッチした部分をハイライト -->
+                <% if post.post.downcase.include?(@query.downcase) %>
+                  <span style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px; font-size: 0.8em; color: #333;">投稿内容</span>
+                <% elsif post.reason.downcase.include?(@query.downcase) %>
+                  <span style="background: #e3f2fd; padding: 2px 4px; border-radius: 3px; font-size: 0.8em; color: #333;">理由</span>
+                <% elsif post.user.name.downcase.include?(@query.downcase) %>
+                  <span style="background: #f3e5f5; padding: 2px 4px; border-radius: 3px; font-size: 0.8em; color: #333;">投稿者</span>
+                <% elsif post.category.name.downcase.include?(@query.downcase) %>
+                  <span style="background: #e8f5e8; padding: 2px 4px; border-radius: 3px; font-size: 0.8em; color: #333;">カテゴリー</span>
+                <% end %>
+              </div>
+              <%= render 'shared/streak_badge', post: post, size: 'medium' %>
+            </div>
+            
+            <div class="post-details" style="font-size: 0.9em; color: #666; line-height: 1.4;">
+              <p><strong>投稿者:</strong> <%= post.user.name %></p>
+              <p><strong>理由:</strong> <%= post.reason %></p>
+              <p><strong>カテゴリ:</strong> <%= post.category&.name %></p>
+              <p><strong>日付:</strong> <%= l post.recorded_on, format: :japanese %></p>
+            </div>
+            
+            <div class="post-actions" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+              <%= render 'shared/favorite_button', post: post %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%= paginate @posts %>
+    </section>
+  <% end %>
+
+  <!-- ユーザー検索結果 -->
+  <% if @users.any? %>
+    <section class="search-users">
+      <h2>👥 ユーザー</h2>
+      <div class="users-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        <% @users.each do |user| %>
+          <div class="user-card" style="border: 1px solid #ddd; border-radius: 12px; padding: 20px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div class="user-header" style="display: flex; align-items: center; margin-bottom: 15px;">
+              <% if user.profile_image.attached? %>
+                <%= image_tag user.profile_image, alt: user.name, style: "width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px;" %>
+              <% else %>
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 15px;">
+                  <%= user.name.first.upcase if user.name.present? %>
+                </div>
+              <% end %>
+              
+              <div class="user-info">
+                <h3 style="margin: 0; color: #333; font-size: 1.2em;">
+                  <%= link_to user.name, user_path(user), style: "text-decoration: none; color: inherit;" %>
+                  <span style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px; font-size: 0.7em; color: #333; margin-left: 8px;">ユーザー名</span>
+                </h3>
+                <% if user.profile.present? %>
+                  <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em; line-height: 1.3;">
+                    <%= truncate(user.profile, length: 50) %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+            
+            <%= render 'shared/user_stats', user: user, layout: 'grid' %>
+            
+            <div class="user-actions" style="text-align: center;">
+              <%= link_to "プロフィール詳細", user_path(user), 
+                  style: "display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 500; font-size: 0.9em;" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- 検索結果なし -->
+  <% if @posts.empty? && @users.empty? %>
+    <div style="text-align: center; margin: 50px 0; color: #666;">
+      <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+      <h3>検索結果が見つかりませんでした</h3>
+      <p>別のキーワードで検索してみてください。</p>
+      <div style="margin-top: 20px;">
+        <p><strong>検索のヒント：</strong></p>
+        <ul style="text-align: left; display: inline-block;">
+          <li>投稿内容や理由の一部</li>
+          <li>ユーザー名</li>
+          <li>カテゴリー名</li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+<% else %>
+  <div style="text-align: center; margin: 50px 0; color: #666;">
+    <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+    <h3>検索キーワードを入力してください</h3>
+    <p>投稿内容、ユーザー名、カテゴリーを検索できます。</p>
+  </div>
+<% end %>
+
+<div style="text-align: center; margin-top: 30px;">
+  <%= link_to "ホームに戻る", home_path, class: "btn btn-primary" %>
+</div>

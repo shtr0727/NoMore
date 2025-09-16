@@ -1,0 +1,34 @@
+<% 
+  # パラメータ: post (必須), size (オプション: 'small', 'medium', 'large')
+  size ||= 'medium'
+  streak_count = post.streak_count
+  is_future = post.recorded_on > Date.current if post.recorded_on
+  
+  # サイズ別のスタイル設定
+  badge_styles = {
+    'small' => 'padding: 3px 8px; border-radius: 12px; font-size: 0.7em;',
+    'medium' => 'padding: 5px 10px; border-radius: 15px; font-size: 0.8em;',
+    'large' => 'padding: 8px 15px; border-radius: 20px; font-size: 0.9em; font-weight: bold;'
+  }
+  
+  style = badge_styles[size] || badge_styles['medium']
+  
+  # 背景色の決定
+  background_color = if is_future
+    '#ff9800'  # オレンジ（未来の投稿）
+  elsif streak_count > 0
+    '#4caf50'  # 緑（継続中）
+  else
+    '#87ceeb'  # 青（うっかり）
+  end
+%>
+
+<div class="streak-badge" style="background: <%= background_color %>; color: white; <%= style %>">
+  <% if is_future %>
+    ⏰ 未来の投稿
+  <% elsif streak_count > 0 %>
+    🔥 <%= streak_count %>日継続中
+  <% else %>
+    💔 うっかり
+  <% end %>
+</div>

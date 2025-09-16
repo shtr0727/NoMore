@@ -55,16 +55,6 @@ class User < ApplicationRecord
     Badge.where(id: badge_ids).order(:required_days)
   end
   
-  # 継続日数バッジのみ
-  def streak_badges
-    earned_badges.where(badge_type: 'streak')
-  end
-  
-  # 現在最も高いバッジ
-  def highest_badge
-    earned_badges.order(:required_days).last
-  end
-  
   # 最高継続日数（ステータスに関係なく）
   def max_streak_count
     posts.includes(:streak)

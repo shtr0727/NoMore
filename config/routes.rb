@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   # Application routes
   get "home", to: "homes#index"
+  get "search", to: "homes#search"
   resources :posts do
     collection do
       get 'drafts'

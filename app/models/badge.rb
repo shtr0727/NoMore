@@ -20,10 +20,4 @@ class Badge < ApplicationRecord
   def streak_badge?
     badge_type == 'streak'
   end
-  
-  # 必要継続日数を満たしているかチェック
-  def earned_by_streak?(streak_count)
-    return false unless streak_badge?
-    streak_count >= required_days
-  end
 end

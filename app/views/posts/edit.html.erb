@@ -49,7 +49,7 @@
 
   <div class="field">
     <%= form.label :category_id, "カテゴリ" %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "カテゴリを選択してください" %>
+    <%= form.collection_select :category_id, @categories, :id, :name, prompt: "カテゴリを選択してください" %>
   </div>
 
   <div class="field">

@@ -24,28 +24,7 @@
         </div>
       </div>
       
-      <div class="user-stats" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-        <div class="stat-item" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 8px;">
-          <div style="font-size: 1.4em; font-weight: bold; color: #007bff;">
-            <%= user.posts.where(is_draft: false).count %>
-          </div>
-          <div style="font-size: 0.8em; color: #666;">投稿</div>
-        </div>
-        
-        <div class="stat-item" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 8px;">
-          <div style="font-size: 1.4em; font-weight: bold; color: #28a745;">
-            <%= user.following.count %>
-          </div>
-          <div style="font-size: 0.8em; color: #666;">フォロー</div>
-        </div>
-        
-        <div class="stat-item" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 8px;">
-          <div style="font-size: 1.4em; font-weight: bold; color: #dc3545;">
-            <%= user.followers.count %>
-          </div>
-          <div style="font-size: 0.8em; color: #666;">フォロワー</div>
-        </div>
-      </div>
+      <%= render 'shared/user_stats', user: user, layout: 'grid' %>
       
       <div class="user-actions" style="text-align: center;">
         <%= link_to "プロフィール詳細", user_path(user), 

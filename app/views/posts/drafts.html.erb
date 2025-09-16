@@ -5,15 +5,7 @@
     <div class="draft-item">
       <div class="draft-header">
         <h3><%= link_to post.post, post_path(post) %></h3>
-        <div class="streak-badge streak-<%= post.recorded_on > Date.current ? 'future' : (post.streak_count > 0 ? 'active' : 'reset') %>">
-          <% if post.recorded_on > Date.current %>
-            ⏰ 未来の投稿
-          <% elsif post.streak_count > 0 %>
-            🔥 <%= post.streak_count %>日継続中
-          <% else %>
-            💔 うっかり
-          <% end %>
-        </div>
+        <%= render 'shared/streak_badge', post: post, size: 'medium' %>
       </div>
       <p><strong>理由:</strong> <%= post.reason %></p>
       <% if post.category %>

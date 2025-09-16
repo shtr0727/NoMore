@@ -4,19 +4,19 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
-    @categories = Category.all
+    set_categories
   end
 
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-    @categories = Category.all
     
     if @post.save
       # 投稿作成時にその投稿のストリークを作成
       @post.current_streak
       redirect_to home_path, notice: '投稿が作成されました'
     else
+      set_categories
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,7 +32,7 @@ class PostsController < ApplicationController
 
   def edit
     # @post は set_post で設定済み
-    @categories = Category.all
+    set_categories
     
     # ストリークが存在しない場合は作成
     @post.current_streak
@@ -57,7 +57,7 @@ class PostsController < ApplicationController
     # 日付が空の場合のエラーハンドリング
     if post_params_with_draft_status[:recorded_on].blank?
       @post.errors.add(:recorded_on, "を入力してください")
-      @categories = Category.all
+      set_categories
       render :edit, status: :unprocessable_entity
       return
     end
@@ -80,7 +80,7 @@ class PostsController < ApplicationController
       end
       redirect_to @post, notice: notice_message
     else
-      @categories = Category.all # エラー時にもカテゴリを再取得
+      set_categories # エラー時にもカテゴリを再取得
       render :edit, status: :unprocessable_entity
     end
   end
@@ -102,6 +102,10 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on, :reset_streak)
+    params.require(:post).permit(:post, :reason, :category_id, :is_draft, :recorded_on)
+  end
+
+  def set_categories
+    @categories = Category.all
   end
 end
