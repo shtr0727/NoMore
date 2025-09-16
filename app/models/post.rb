@@ -21,11 +21,6 @@ class Post < ApplicationRecord
     current_streak.current_count
   end
 
-  # ストリークの状態を取得
-  def streak_status
-    current_streak.status
-  end
-  
   # アクティブな継続状態かどうか
   def streak_active?
     current_streak.active?
