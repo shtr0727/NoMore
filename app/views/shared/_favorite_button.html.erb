@@ -1,4 +1,4 @@
-<div class="favorite-button">
+<div class="favorite-button" style="display: flex; gap: 10px; align-items: center;">
   <% if user_signed_in? %>
     <% if current_user.favorited?(post) %>
       <%= link_to post_favorite_path(post), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" do %>
@@ -14,4 +14,8 @@
       🤍 <%= post.favorites.count %>
     </span>
   <% end %>
+  
+  <div class="comment-count" style="display: flex; align-items: center; gap: 5px; font-size: 0.9em; color: #666;">
+    💬 <%= post.comments.count %>
+  </div>
 </div>
