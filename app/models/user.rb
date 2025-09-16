@@ -67,13 +67,14 @@ class User < ApplicationRecord
   
   # 最高継続日数（ステータスに関係なく）
   def max_streak_count
-    posts.joins(:streak)
-         .maximum('streaks.current_count') || 0
+    posts.includes(:streak)
+         .map { |post| post.streak_count }
+         .max || 0
   end
   
   # 現在継続中の習慣数
   def active_streaks_count
-    posts.joins(:streak)
+    posts.includes(:streak)
          .select { |post| post.streak_active? }
          .count
   end
