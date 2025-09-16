@@ -6,23 +6,30 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one :streak, dependent: :destroy
 
+  # バリデーション
+  validates :recorded_on, presence: { message: "を入力してください" }
+
   # 投稿のストリークを取得または作成
   def current_streak
+    return nil unless recorded_on  # recorded_onがnilの場合はnilを返す
+    
     streak || create_streak!(
       user: user,
       post: self,
-      date: recorded_on || Date.current  # 投稿の記録日を使用
+      date: recorded_on
     )
   end
 
   # ストリークの継続日数を取得
   def streak_count
-    current_streak.current_count
+    streak = current_streak
+    streak ? streak.current_count : 0
   end
 
   # アクティブな継続状態かどうか
   def streak_active?
-    current_streak.active?
+    streak = current_streak
+    streak ? streak.active? : false
   end
   
   # 投稿の日付変更時にストリークの基準日も更新

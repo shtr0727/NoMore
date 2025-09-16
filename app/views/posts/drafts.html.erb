@@ -1,30 +1,29 @@
 <h1>下書き一覧</h1>
 
 <% if @draft_posts.present? %>
-  <div>
-    <% @draft_posts.each do |post| %>
-      <div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
-          <h3><%= link_to post.post, post_path(post), style: "margin: 0; text-decoration: none; color: #333;" %></h3>
-          <% streak_count = post.streak_count %>
-          <div class="streak-badge" style="background: <%= post.recorded_on > Date.current ? '#ff9800' : (streak_count > 0 ? '#4caf50' : '#f44336') %>; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8em;">
-            <% if post.recorded_on > Date.current %>
-              ⏰ 未来の投稿
-            <% elsif streak_count > 0 %>
-              🔥 <%= streak_count %>日継続中
-            <% else %>
-              💔 うっかり
-            <% end %>
-          </div>
+  <% @draft_posts.each do |post| %>
+    <div class="draft-item">
+      <div class="draft-header">
+        <h3><%= link_to post.post, post_path(post) %></h3>
+        <div class="streak-badge streak-<%= post.recorded_on > Date.current ? 'future' : (post.streak_count > 0 ? 'active' : 'reset') %>">
+          <% if post.recorded_on > Date.current %>
+            ⏰ 未来の投稿
+          <% elsif post.streak_count > 0 %>
+            🔥 <%= post.streak_count %>日継続中
+          <% else %>
+            💔 うっかり
+          <% end %>
         </div>
-        <p>理由: <%= post.reason %></p>
-        <p>カテゴリー: <%= post.category&.name %></p>
-        <p>作成日: <%= l post.created_at, format: :long %></p>
       </div>
-    <% end %>
-  </div>
+      <p><strong>理由:</strong> <%= post.reason %></p>
+      <% if post.category %>
+        <p><strong>カテゴリー:</strong> <%= post.category.name %></p>
+      <% end %>
+      <p><strong>作成日:</strong> <%= l post.created_at, format: :long %></p>
+    </div>
+  <% end %>
 <% else %>
-  <p>下書き投稿はありません。</p>
+  <p class="no-drafts">下書き投稿はありません。</p>
 <% end %>
 
-<%= link_to '戻る', user_path(current_user) %>
+<%= link_to '戻る', user_path(current_user), class: 'back-link' %>

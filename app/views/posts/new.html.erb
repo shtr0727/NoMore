@@ -34,7 +34,8 @@
 
   <div class="field">
     <%= f.label :recorded_on, "日付" %><br>
-    <%= f.date_field :recorded_on, value: Date.today %>
+    <%= f.date_field :recorded_on, value: Date.today, required: true %>
+    <small class="form-text" style="color: #666; font-size: 0.85em;">※日付は必須です。</small>
   </div>
 
   <div class="actions">

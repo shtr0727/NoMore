@@ -4,7 +4,7 @@
 <% streak = @post.current_streak %>
 <% if streak %>
   <% streak_count = @post.streak_count %>
-  <% is_future = @post.recorded_on > Date.current %>
+  <% is_future = @post.recorded_on && @post.recorded_on > Date.current %>
   <% is_active = streak_count > 0 %>
   
   <div class="streak-info" style="background-color: #f0f8ff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd;">
@@ -15,13 +15,13 @@
         <%= is_future ? '⏰ 未来の投稿' : (is_active ? "🔥 #{streak_count}日継続中" : '💔 うっかり') %>
       </div>
       <div style="font-size: 0.9em; color: #666;">
-        開始日: <%= l @post.recorded_on, format: :japanese %>
+        開始日: <%= @post.recorded_on ? l(@post.recorded_on, format: :japanese) : '日付未設定' %>
       </div>
     </div>
   </div>
 <% else %>
   <div style="background-color: #fff3cd; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ffeaa7;">
-    <p>ストリーク情報が見つかりません。この投稿を一度更新すると作成されます。</p>
+    <h4 style="margin-top: 0; margin-bottom: 0; color: #856404;">📅 日付を入力してください</h4>
   </div>
 <% end %>
 
@@ -54,7 +54,8 @@
 
   <div class="field">
     <%= form.label :recorded_on, "日付" %>
-    <%= form.date_field :recorded_on %>
+    <%= form.date_field :recorded_on, required: true %>
+    <small class="form-text" style="color: #666; font-size: 0.85em;">※日付は必須です。空の場合は更新できません。</small>
   </div>
 
   <!-- うっかりリセットチェックボックス -->

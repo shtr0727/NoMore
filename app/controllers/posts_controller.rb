@@ -54,6 +54,14 @@ class PostsController < ApplicationController
       post_params_with_draft_status[:recorded_on] = Date.current
     end
 
+    # 日付が空の場合のエラーハンドリング
+    if post_params_with_draft_status[:recorded_on].blank?
+      @post.errors.add(:recorded_on, "を入力してください")
+      @categories = Category.all
+      render :edit, status: :unprocessable_entity
+      return
+    end
+
     # reset_streakはPostの属性ではないので除外
     post_params_with_draft_status.delete(:reset_streak)
 
