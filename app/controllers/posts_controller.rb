@@ -60,12 +60,8 @@ class PostsController < ApplicationController
     if @post.update(post_params_with_draft_status)
       # recorded_onが変更された場合、ストリークの基準日も更新
       if original_recorded_on != @post.recorded_on
-        Rails.logger.info "DEBUG: recorded_on changed from #{original_recorded_on} to #{@post.recorded_on}"
-        Rails.logger.info "DEBUG: Before update - streak date: #{@post.streak&.date}"
         @post.update_streak_date!
-        @post.reload # データベースから最新の状態を取得
-        Rails.logger.info "DEBUG: After update - streak date: #{@post.streak&.date}"
-        Rails.logger.info "DEBUG: Streak count: #{@post.streak_count}"
+        @post.reload
       end
       
       notice_message = '投稿が更新されました'

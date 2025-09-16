@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   has_many :favorited_users, through: :favorites, source: :user
   has_many :comments, dependent: :destroy
   has_one :streak, dependent: :destroy
-  # バッジは動的に計算（永続化しない）
 
   # 投稿のストリークを取得または作成
   def current_streak
@@ -42,8 +41,5 @@ class Post < ApplicationRecord
     Badge.streak_badges.where('required_days <= ?', current_streak_count).order(:required_days)
   end
   
-  # バッジを取得（動的計算のため、current_badgesと同じ）
-  def badges
-    current_badges
-  end
+  alias badges current_badges
 end
