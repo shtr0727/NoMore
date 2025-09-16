@@ -2,8 +2,10 @@
 
 one:
   date: 2025-07-02
-  status: MyString
+  user: one
+  post: one
 
 two:
   date: 2025-07-02
-  status: MyString
+  user: two
+  post: two

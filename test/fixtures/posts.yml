@@ -5,7 +5,7 @@ one:
   post: MyText
   reason: MyText
   category: one
-  streak: one
+  # streak: # streakは別テーブルで管理 one
   is_draft: false
   recorded_on: 2025-07-02 22:20:22
 
@@ -14,6 +14,6 @@ two:
   post: MyText
   reason: MyText
   category: two
-  streak: two
+  # streak: # streakは別テーブルで管理 two
   is_draft: false
   recorded_on: 2025-07-02 22:20:22

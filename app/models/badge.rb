@@ -1,6 +1,5 @@
 class Badge < ApplicationRecord
-  has_many :post_badges, dependent: :destroy
-  has_many :posts, through: :post_badges
+  # post_badgesテーブルは削除済み - バッジは動的計算で管理
   
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
