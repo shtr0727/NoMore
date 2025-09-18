@@ -40,9 +40,4 @@ class Streak < ApplicationRecord
     end
   end
   
-  def update_date_from_post!
-    return unless post&.recorded_on
-    
-    update!(date: post.recorded_on)
-  end
 end

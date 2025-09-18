@@ -32,13 +32,6 @@ class Post < ApplicationRecord
     streak ? streak.active? : false
   end
   
-  # 投稿の日付変更時にストリークの基準日も更新
-  def update_streak_date!
-    return unless streak
-    
-    # 既存のストリークがある場合、recorded_onの変更に合わせて基準日を更新
-    streak.update_date_from_post!
-  end
   
   # 現在の継続日数に応じた獲得バッジを動的に取得
   def current_badges

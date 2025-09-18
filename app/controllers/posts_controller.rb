@@ -66,9 +66,8 @@ class PostsController < ApplicationController
     post_params_with_draft_status.delete(:reset_streak)
 
     if @post.update(post_params_with_draft_status)
-      # recorded_onが変更された場合、ストリークの基準日も更新
+      # recorded_onが変更された場合の処理は不要（streaks.dateカラム削除により）
       if original_recorded_on != @post.recorded_on
-        @post.update_streak_date!
         @post.reload
       end
       

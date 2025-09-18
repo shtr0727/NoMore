@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_16_142708) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_18_150424) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_142708) do
     t.text "reason", null: false
     t.integer "category_id", null: false
     t.boolean "is_draft", null: false
-    t.date "recorded_on"
+    t.date "recorded_on", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_posts_on_category_id"
@@ -85,14 +85,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_142708) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "followed_id"
+    t.integer "follower_id", null: false
+    t.integer "followed_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "streaks", force: :cascade do |t|
-    t.date "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
