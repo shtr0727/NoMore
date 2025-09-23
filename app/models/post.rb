@@ -15,8 +15,7 @@ class Post < ApplicationRecord
     
     streak || create_streak!(
       user: user,
-      post: self,
-      date: recorded_on
+      post: self
     )
   end
 
