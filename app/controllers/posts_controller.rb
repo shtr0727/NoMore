@@ -75,7 +75,7 @@ class PostsController < ApplicationController
       if params[:post][:reset_streak] == "true"
         notice_message += '（継続記録をリセットしました）'
       elsif original_recorded_on != @post.recorded_on
-        notice_message += "（日付が#{original_recorded_on}から#{@post.recorded_on}に変更され、継続日数は#{@post.streak_count}日になりました）"
+        notice_message += "（日付が#{original_recorded_on.strftime('%Y年%m月%d日')}から#{@post.recorded_on.strftime('%Y年%m月%d日')}に変更され、継続日数は#{@post.streak_count}日になりました）"
       end
       redirect_to @post, notice: notice_message
     else
