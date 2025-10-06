@@ -70,9 +70,14 @@
 <% end %>
 
 <% if user_signed_in? && current_user == @user %>
-  <%= link_to "プロフィール編集", edit_user_path(@user), class: "action-link" %>
-  <%= link_to "アカウント設定", edit_user_registration_path, class: "action-link" %>
-  <%= link_to "下書き一覧", drafts_posts_path, class: "nav-link" %>
+  <div style="margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 1px solid #e9ecef;">
+    <h3 style="margin: 0 0 15px 0; color: #495057; font-size: 1.1em;">アカウント管理</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+      <%= link_to "プロフィール編集", edit_user_path(@user), class: "action-link", style: "display: inline-flex; align-items: center; padding: 8px 16px; background: white; border: 1px solid #dee2e6; border-radius: 6px; font-size: 0.9em; transition: all 0.2s ease;" %>
+      <%= link_to "アカウント設定", edit_user_registration_path, class: "action-link", style: "display: inline-flex; align-items: center; padding: 8px 16px; background: white; border: 1px solid #dee2e6; border-radius: 6px; font-size: 0.9em; transition: all 0.2s ease;" %>
+      <%= link_to "下書き一覧", drafts_posts_path, class: "action-link", style: "display: inline-flex; align-items: center; padding: 8px 16px; background: white; border: 1px solid #dee2e6; border-radius: 6px; font-size: 0.9em; transition: all 0.2s ease;" %>
+    </div>
+  </div>
 <% end %>
 
 <h2><%= @user.name %>さんの投稿</h2>

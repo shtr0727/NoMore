@@ -1,46 +1,48 @@
-<h1>投稿作成</h1>
+<div class="post-form-container">
+  <h1>投稿作成</h1>
 
-<%= form_with(model: @post, local: true) do |f| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
-      <ul>
-        <% @post.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+  <%= form_with(model: @post, local: true) do |f| %>
+    <% if @post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+        <ul>
+          <% @post.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :post, "やめたいこと" %>
+      <%= f.text_area :post, rows: 3, placeholder: "やめたい習慣や行動を入力してください" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :reason, "理由" %>
+      <%= f.text_area :reason, rows: 2, placeholder: "なぜやめたいのか理由を入力してください" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :category_id, "カテゴリ" %>
+      <%= f.collection_select :category_id, @categories, :id, :name, prompt: "カテゴリを選択してください" %>
+    </div>
+
+    <div class="checkbox-field">
+      <%= f.check_box :is_draft %>
+      <%= f.label :is_draft, "下書き保存" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :recorded_on, "日付" %>
+      <%= f.date_field :recorded_on, value: Date.today, required: true %>
+      <small class="form-text">※日付は必須です。</small>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "投稿" %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :post, "やめたいこと" %><br>
-    <%= f.text_area :post, rows: 3 %>
-  </div>
-
-  <div class="field">
-    <%= f.label :reason, "理由" %><br>
-    <%= f.text_area :reason, rows: 2 %>
-  </div>
-
-  <div class="field">
-    <%= f.label :category_id, "カテゴリ" %><br>
-    <%= f.collection_select :category_id, @categories, :id, :name, prompt: "選択してください" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :is_draft, "下書き保存" %>
-    <%= f.check_box :is_draft %>
-  </div>
-
-  <div class="field">
-    <%= f.label :recorded_on, "日付" %><br>
-    <%= f.date_field :recorded_on, value: Date.today, required: true %>
-    <small class="form-text" style="color: #666; font-size: 0.85em;">※日付は必須です。</small>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "投稿" %>
-  </div>
-<% end %>
-
-<%= link_to "キャンセル", home_path, class: "nav-link" %>
+  <%= link_to "キャンセル", home_path, class: "cancel-link" %>
+</div>

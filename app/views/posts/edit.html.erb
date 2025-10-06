@@ -1,82 +1,86 @@
-<h1>投稿の編集</h1>
+<div class="post-form-container">
+  <h1>投稿の編集</h1>
 
-<!-- ストリーク情報表示 -->
-<% streak = @post.current_streak %>
-<% if streak %>
-  <% streak_count = @post.streak_count %>
-  <% is_future = @post.recorded_on && @post.recorded_on > Date.current %>
-  <% is_active = streak_count > 0 %>
-  
-  <div class="streak-info" style="background-color: #f0f8ff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd;">
-    <h3 style="margin-top: 0;">📈 現在の継続状況</h3>
-    <div style="display: flex; align-items: center; gap: 15px;">
-      <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
-           background-color: <%= is_future ? '#ff9800' : (is_active ? '#4caf50' : '#87ceeb') %>; color: white;">
-        <%= is_future ? '⏰ 未来の投稿' : (is_active ? "🔥 #{streak_count}日継続中" : '💔 うっかり') %>
-      </div>
-      <div style="font-size: 0.9em; color: #666;">
-        開始日: <%= @post.recorded_on ? l(@post.recorded_on, format: :japanese) : '日付未設定' %>
+  <!-- ストリーク情報表示 -->
+  <% streak = @post.current_streak %>
+  <% if streak %>
+    <% streak_count = @post.streak_count %>
+    <% is_future = @post.recorded_on && @post.recorded_on > Date.current %>
+    <% is_active = streak_count > 0 %>
+    
+    <div class="streak-info" style="background-color: #f0f8ff; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd;">
+      <h3 style="margin-top: 0;">📈 現在の継続状況</h3>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <div class="streak-status" style="padding: 8px 15px; border-radius: 20px; font-weight: bold; 
+             background-color: <%= is_future ? '#ff9800' : (is_active ? '#4caf50' : '#87ceeb') %>; color: white;">
+          <%= is_future ? '⏰ 未来の投稿' : (is_active ? "🔥 #{streak_count}日継続中" : '💔 うっかり') %>
+        </div>
+        <div style="font-size: 0.9em; color: #666;">
+          開始日: <%= @post.recorded_on ? l(@post.recorded_on, format: :japanese) : '日付未設定' %>
+        </div>
       </div>
     </div>
-  </div>
-<% else %>
-  <div style="background-color: #fff3cd; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ffeaa7;">
-    <h4 style="margin-top: 0; margin-bottom: 0; color: #856404;">📅 日付を入力してください</h4>
-  </div>
-<% end %>
-
-<%= form_with(model: @post, local: true) do |form| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= @post.errors.count %>件のエラーがあります。</h2>
-      <ul>
-        <% @post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <% else %>
+    <div style="background-color: #fff3cd; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ffeaa7;">
+      <h4 style="margin-top: 0; margin-bottom: 0; color: #856404;">📅 日付を入力してください</h4>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :post, "投稿" %>
-    <%= form.text_area :post %>
-  </div>
-
-  <div class="field">
-    <%= form.label :reason, "理由" %>
-    <%= form.text_area :reason %>
-  </div>
-
-  <div class="field">
-    <%= form.label :category_id, "カテゴリ" %>
-    <%= form.collection_select :category_id, @categories, :id, :name, prompt: "カテゴリを選択してください" %>
-  </div>
-
-  <div class="field">
-    <%= form.label :recorded_on, "日付" %>
-    <%= form.date_field :recorded_on, required: true %>
-    <small class="form-text" style="color: #666; font-size: 0.85em;">※日付は必須です。空の場合は更新できません。</small>
-  </div>
-
-  <!-- うっかりリセットチェックボックス -->
-  <% if @post.streak&.current_count > 0 %>
-    <div class="field" style="background-color: #ffe6e6; padding: 15px; border-radius: 5px; border: 1px solid #ffcccc; margin: 15px 0;">
-      <%= form.check_box :reset_streak, {}, "true", "false" %>
-      <%= form.label :reset_streak, "この投稿をうっかりリセットする", style: "color: #d32f2f; font-weight: bold;" %>
-      <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
-        ※ チェックすると、投稿更新時に継続記録がリセットされ、日付が今日に変更されます
+  <%= form_with(model: @post, local: true) do |form| %>
+    <% if @post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= @post.errors.count %>件のエラーがあります。</h2>
+        <ul>
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <% if @post.is_draft %>
-      <%= form.submit "下書き保存", name: "commit_draft" %>  
-      <%= form.submit "投稿", name: "commit_publish" %>
-    <% else %>
-      <%= form.submit "更新" %>
     <% end %>
-  </div>
-<% end %>
 
-<%= link_to 'キャンセル', post_path(@post), class: "nav-link" %>
+    <div class="field">
+      <%= form.label :post, "やめたいこと" %>
+      <%= form.text_area :post, rows: 3, placeholder: "やめたい習慣や行動を入力してください" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :reason, "理由" %>
+      <%= form.text_area :reason, rows: 2, placeholder: "なぜやめたいのか理由を入力してください" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :category_id, "カテゴリ" %>
+      <%= form.collection_select :category_id, @categories, :id, :name, prompt: "カテゴリを選択してください" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :recorded_on, "日付" %>
+      <%= form.date_field :recorded_on, required: true %>
+      <small class="form-text">※日付は必須です。空の場合は更新できません。</small>
+    </div>
+
+    <!-- うっかりリセットチェックボックス -->
+    <% if @post.streak&.current_count > 0 %>
+      <div class="reset-streak-field" style="background-color: #ffe6e6; padding: 15px; border-radius: 8px; border: 1px solid #ffcccc; margin: 15px 0;">
+        <div class="checkbox-field">
+          <%= form.check_box :reset_streak, {}, "true", "false" %>
+          <%= form.label :reset_streak, "この投稿をうっかりリセットする", style: "color: #d32f2f; font-weight: bold;" %>
+        </div>
+        <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
+          ※ チェックすると、投稿更新時に継続記録がリセットされ、日付が今日に変更されます
+        </div>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <% if @post.is_draft %>
+        <%= form.submit "下書き保存", name: "commit_draft", class: "btn-secondary" %>  
+        <%= form.submit "投稿", name: "commit_publish" %>
+      <% else %>
+        <%= form.submit "更新" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= link_to 'キャンセル', post_path(@post), class: "cancel-link" %>
+</div>

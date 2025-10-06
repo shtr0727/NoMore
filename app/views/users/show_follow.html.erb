@@ -1,51 +1,19 @@
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info" style="text-align: center; padding: 20px; background: white; border-radius: 10px; border: 1px solid #ddd;">
-      <div style="margin-bottom: 15px;">
-        <% if @user.has_profile_image? %>
-          <%= image_tag @user.profile_image, alt: @user.name, style: "width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #ddd;" %>
-        <% else %>
-          <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 24px; margin: 0 auto; border: 3px solid #ddd;">
-            <%= @user.name.first.upcase if @user.name.present? %>
-          </div>
-        <% end %>
-      </div>
-      <h1 style="margin: 10px 0;"><%= @user.name %></h1>
-      <div style="margin: 10px 0;">
-        <%= link_to "プロフィールを見る", @user, class: "modern-link" %>
-      </div>
-      <div style="font-weight: bold; color: #666;">
-        投稿数: <%= @user.posts.count %>
-      </div>
-    </section>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-      <% if @users.any? %>
-        <div class="user_avatars" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 15px;">
-          <% @users.each do |user| %>
-            <%= link_to user, class: "card-link" do %>
-              <% if user.has_profile_image? %>
-                <%= image_tag user.profile_image, alt: user.name, style: "width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;" %>
-              <% else %>
-                <div style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; border: 2px solid #ddd;">
-                  <%= user.name.first.upcase if user.name.present? %>
-                </div>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
-    </section>
-  </aside>
-  <div class="col-md-8">
-    <h3 style="margin-bottom: 20px; color: #333;"><%= @title %></h3>
-    <% if @users.any? %>
-      <ul class="users follow" style="padding: 0; margin: 0;">
-        <%= render @users %>
-      </ul>
-      <div style="margin-top: 20px; text-align: center;">
-        <%= paginate @users %>
-      </div>
+<div class="container">
+  <h3 style="margin-bottom: 20px; color: #333;"><%= @title %></h3>
+  <% if @users.any? %>
+    <ul class="users follow" style="padding: 0; margin: 0;">
+      <%= render @users %>
+    </ul>
+    <div style="margin-top: 20px; text-align: center;">
+      <%= paginate @users %>
+    </div>
+  <% end %>
+  
+  <div style="margin-top: 30px; text-align: center;">
+    <% if current_user == @user %>
+      <%= link_to "マイページに戻る", @user, class: "btn btn-secondary", style: "padding: 10px 20px; text-decoration: none;" %>
+    <% else %>
+      <%= link_to "#{@user.name}さんのページに戻る", @user, class: "btn btn-secondary", style: "padding: 10px 20px; text-decoration: none;" %>
     <% end %>
   </div>
 </div>

@@ -1,43 +1,44 @@
-<h1>プロフィール編集</h1>
+<div class="post-form-container">
+  <h1>プロフィール編集</h1>
 
-<%= form_with model: @user, url: user_path(@user), method: :patch, local: true do |f|
-%>
-  <!-- 現在のプロフィール画像表示 -->
-  <div class="field" style="margin-bottom: 20px;">
-    <label>現在のプロフィール画像</label><br />
-    <div style="margin-top: 10px;">
-      <% if @user.has_profile_image? %>
-        <%= image_tag @user.profile_image, style: "width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;" %>
-      <% else %>
-        <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border: 2px solid #ddd; color: #999; font-size: 12px;">
-          No Image
-        </div>
-      <% end %>
+  <%= form_with model: @user, url: user_path(@user), method: :patch, local: true do |f| %>
+    <!-- 現在のプロフィール画像表示 -->
+    <div class="field">
+      <label>現在のプロフィール画像</label>
+      <div style="margin-top: 10px;">
+        <% if @user.has_profile_image? %>
+          <%= image_tag @user.profile_image, style: "width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;" %>
+        <% else %>
+          <div style="width: 80px; height: 80px; border-radius: 50%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border: 2px solid #ddd; color: #999; font-size: 12px;">
+            No Image
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <!-- プロフィール画像アップロード -->
-  <div class="field" style="margin-bottom: 20px;">
-    <%= f.label :profile_image, "プロフィール画像" %><br />
-    <%= f.file_field :profile_image, accept: "image/*", style: "margin-top: 5px;" %>
-    <small style="display: block; margin-top: 5px; color: #666;">
-      JPEG、PNG、GIFファイルのみ。5MB以下。
-    </small>
-  </div>
+    <!-- プロフィール画像アップロード -->
+    <div class="field">
+      <%= f.label :profile_image, "プロフィール画像" %>
+      <%= f.file_field :profile_image, accept: "image/*" %>
+      <small class="form-text">
+        JPEG、PNG、GIFファイルのみ。5MB以下。
+      </small>
+    </div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
+    <div class="field">
+      <%= f.label :name, "ユーザー名" %>
+      <%= f.text_field :name, placeholder: "ユーザー名を入力してください" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :profile %><br />
-    <%= f.text_area :profile %>
-  </div>
+    <div class="field">
+      <%= f.label :profile, "プロフィール" %>
+      <%= f.text_area :profile, rows: 4, placeholder: "自己紹介を入力してください" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "更新" %>
-  </div>
-<% end %>
+    <div class="actions">
+      <%= f.submit "更新" %>
+    </div>
+  <% end %>
 
-<%= link_to "戻る", user_path(@user), class: "nav-link" %>
+  <%= link_to "戻る", user_path(@user), class: "cancel-link" %>
+</div>

@@ -111,7 +111,7 @@
 
 <% if user_signed_in? && current_user == @post.user %>
   <div style="display: flex; gap: 10px; margin: 15px 0;">
-    <%= link_to '編集', edit_post_path(@post), class: "action-link" %>
+    <%= link_to '編集', edit_post_path(@post), class: "btn btn-primary btn-sm", style: "background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; border: 1px solid #007bff;" %>
     <%= button_to '削除', post_path(@post), method: :delete, 
                   data: { turbo_confirm: '本当に削除しますか？' }, 
                   class: "btn btn-danger btn-sm" %>
@@ -165,7 +165,7 @@
 
   <!-- コメント投稿フォーム -->
   <% if user_signed_in? %>
-    <div class="comment-form">
+    <div class="comment-form-container">
       <h4>コメントを投稿</h4>
       <%= form_with model: [@post, @comment], local: true do |f| %>
         <% if @comment.errors.any? %>
@@ -178,13 +178,13 @@
           </div>
         <% end %>
         
-        <div class="form-group">
+        <div class="field">
           <%= f.text_area :content, placeholder: "コメントを入力してください", rows: 3, required: true %>
           <small class="form-text">最大500文字まで</small>
         </div>
         
-        <div class="form-actions">
-          <%= f.submit 'コメントを投稿', class: 'btn btn-primary' %>
+        <div class="actions">
+          <%= f.submit 'コメントを投稿' %>
         </div>
       <% end %>
     </div>
