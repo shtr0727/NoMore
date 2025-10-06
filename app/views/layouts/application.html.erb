@@ -11,16 +11,24 @@
   </head>
 
   <body>
-    <header class="main-header">
+    <header class="main-header" data-controller="header">
       <div class="header-logo">
         <%= link_to "No More", root_path %>
       </div>
-      <nav class="header-nav">
+      
+      <!-- ハンバーガーメニューボタン（モバイル用） -->
+      <button class="hamburger-menu" data-header-target="hamburger" data-action="click->header#toggle" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <nav class="header-nav" data-header-target="nav">
         <% if user_signed_in? %>
           <%= link_to "ホーム", home_path, class: "header-btn" %>
           <%= link_to "投稿作成", new_post_path, class: "header-btn" %>
           <%= link_to "ユーザー一覧", users_path, class: "header-btn" %>
-          <%= link_to user_path(current_user), class: "header-btn", style: "display: flex; align-items: center; gap: 8px; text-decoration: none;" do %>
+          <%= link_to user_path(current_user), class: "header-btn user-profile-btn", style: "display: flex; align-items: center; gap: 8px; text-decoration: none;" do %>
             <% if current_user.has_profile_image? %>
               <%= image_tag current_user.profile_image, style: "width: 30px; height: 30px; border-radius: 50%; object-fit: cover;" %>
             <% else %>
@@ -28,10 +36,10 @@
                 <%= current_user.name.first.upcase if current_user.name.present? %>
               </div>
             <% end %>
-            <span>マイページ<br>(<%= current_user.name %>さん)</span>
+            <span class="user-name-text">マイページ<br>(<%= current_user.name %>さん)</span>
           <% end %>
           <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'header-btn' %>
-          <%= form_with url: search_path, method: :get, class: "header-search-form", style: "display:inline;", local: true do |f| %>
+          <%= form_with url: search_path, method: :get, class: "header-search-form", local: true do |f| %>
             <%= f.text_field :q, placeholder: "投稿・ユーザー検索...", class: "header-search-input", value: params[:q] %>
             <%= f.submit "検索", class: "header-search-btn" %>
           <% end %>
