@@ -45,7 +45,7 @@ export default class extends Controller {
 
   closeOnResize() {
     // デスクトップサイズになった時はメニューを閉じる
-    if (window.innerWidth > 768) {
+    if (window.innerWidth >= 1200) {
       this.close()
     }
   }

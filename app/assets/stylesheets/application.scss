@@ -75,6 +75,19 @@
   text-align: center;
 }
 
+// ユーザープロフィールボタンのテキスト表示制御
+.user-profile-btn {
+  .user-name-text {
+    .desktop-text {
+      display: inline !important;
+    }
+
+    .mobile-text {
+      display: none !important;
+    }
+  }
+}
+
 // ハンバーガーメニューのスタイル
 .main-header .hamburger-menu {
   display: none;
@@ -146,7 +159,7 @@
 }
 
 // レスポンシブ対応
-@media (max-width: 768px) {
+@media (max-width: 1199px) {
   .main-header {
     padding: 1rem;
     flex-wrap: wrap;
@@ -185,6 +198,14 @@
   .user-profile-btn {
     .user-name-text {
       font-size: 0.9rem;
+
+      .desktop-text {
+        display: none !important;
+      }
+
+      .mobile-text {
+        display: inline !important;
+      }
     }
   }
 
@@ -199,7 +220,28 @@
   }
 }
 
-@media (max-width: 480px) {
+// タブレット表示（1200px未満〜769px）
+@media (max-width: 1199px) and (min-width: 769px) {
+  .user-profile-btn {
+    .user-name-text {
+      .desktop-text {
+        display: none !important;
+      }
+
+      .mobile-text {
+        display: inline !important;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .header-search-input {
+    min-width: 150px;
+  }
+}
+
+// スマートフォン表示（768px以下）
+@media (max-width: 768px) {
   .main-header {
     padding: 0.5rem;
   }
@@ -216,7 +258,14 @@
 
   .user-profile-btn {
     .user-name-text {
-      display: none;
+      .desktop-text {
+        display: none !important;
+      }
+
+      .mobile-text {
+        display: inline !important;
+        font-size: 0.8rem;
+      }
     }
   }
 
