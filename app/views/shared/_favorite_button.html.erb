@@ -1,12 +1,12 @@
 <div class="favorite-button" style="display: flex; gap: 10px; align-items: center;">
   <% if user_signed_in? %>
     <% if current_user.favorited?(post) %>
-      <%= link_to post_favorite_path(post), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" do %>
-        ❤️ <%= post.favorites.count %>
+      <%= button_to post_favorite_path(post), method: :delete, class: "btn btn-danger btn-sm", style: "border: none; background: none; padding: 0;" do %>
+        <span class="btn btn-danger btn-sm">❤️ <%= post.favorites.count %></span>
       <% end %>
     <% else %>
-      <%= link_to post_favorite_path(post), data: { turbo_method: :post }, class: "btn btn-outline-danger btn-sm" do %>
-        🤍 <%= post.favorites.count %>
+      <%= button_to post_favorite_path(post), method: :post, class: "btn btn-outline-danger btn-sm", style: "border: none; background: none; padding: 0;" do %>
+        <span class="btn btn-outline-danger btn-sm">🤍 <%= post.favorites.count %></span>
       <% end %>
     <% end %>
   <% else %>

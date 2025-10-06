@@ -4,7 +4,7 @@
   <% @draft_posts.each do |post| %>
     <div class="draft-item">
       <div class="draft-header">
-        <h3><%= link_to post.post, post_path(post) %></h3>
+        <h3><%= link_to post.post, post_path(post), class: "post-title-link" %></h3>
         <%= render 'shared/streak_badge', post: post, size: 'medium' %>
       </div>
       <p><strong>理由:</strong> <%= post.reason %></p>
@@ -18,4 +18,4 @@
   <p class="no-drafts">下書き投稿はありません。</p>
 <% end %>
 
-<%= link_to '戻る', user_path(current_user), class: 'back-link' %>
+<%= link_to '戻る', user_path(current_user), class: 'nav-link' %>

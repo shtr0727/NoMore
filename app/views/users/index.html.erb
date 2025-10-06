@@ -14,7 +14,7 @@
         
         <div class="user-info">
           <h3 style="margin: 0; color: #333; font-size: 1.2em;">
-            <%= link_to user.name, user_path(user), style: "text-decoration: none; color: inherit;" %>
+            <%= link_to user.name, user_path(user), class: "user-link" %>
           </h3>
           <% if user.profile.present? %>
             <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em; line-height: 1.3;">

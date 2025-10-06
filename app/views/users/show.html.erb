@@ -70,9 +70,9 @@
 <% end %>
 
 <% if user_signed_in? && current_user == @user %>
-  <%= link_to "プロフィール編集", edit_user_path(@user) %>
-  <%= link_to "アカウント設定", edit_user_registration_path %>
-  <%= link_to "下書き一覧", drafts_posts_path %>
+  <%= link_to "プロフィール編集", edit_user_path(@user), class: "action-link" %>
+  <%= link_to "アカウント設定", edit_user_registration_path, class: "action-link" %>
+  <%= link_to "下書き一覧", drafts_posts_path, class: "nav-link" %>
 <% end %>
 
 <h2><%= @user.name %>さんの投稿</h2>
@@ -80,7 +80,7 @@
   <% @posts.each do |post| %>
     <div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
-        <h3><%= link_to post.post, post_path(post), style: "margin: 0; text-decoration: none; color: #333;" %></h3>
+        <h3><%= link_to post.post, post_path(post), class: "post-title-link", style: "margin: 0;" %></h3>
         <%= render 'shared/streak_badge', post: post, size: 'medium' %>
       </div>
       <p><%= post.reason %></p>

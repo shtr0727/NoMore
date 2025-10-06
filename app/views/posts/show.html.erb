@@ -11,7 +11,7 @@
   <% end %>
   <div>
     <h3 style="margin: 0; color: #333;">
-      <%= link_to @post.user.name, user_path(@post.user), style: "text-decoration: none; color: inherit;" %>さんの投稿
+      <%= link_to @post.user.name, user_path(@post.user), class: "user-link" %>さんの投稿
     </h3>
     <small style="color: #666;"><%= @post.recorded_on ? l(@post.recorded_on, format: :japanese) : '日付が設定されていません' %></small>
   </div>
@@ -110,8 +110,12 @@
 <%= render 'shared/favorite_button', post: @post %>
 
 <% if user_signed_in? && current_user == @post.user %>
-  <%= link_to '編集', edit_post_path(@post) %>
-  <%= link_to '削除', post_path(@post), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
+  <div style="display: flex; gap: 10px; margin: 15px 0;">
+    <%= link_to '編集', edit_post_path(@post), class: "action-link" %>
+    <%= button_to '削除', post_path(@post), method: :delete, 
+                  data: { turbo_confirm: '本当に削除しますか？' }, 
+                  class: "btn btn-danger btn-sm" %>
+  </div>
 <% end %>
 
 <!-- コメント一覧 -->
@@ -137,13 +141,15 @@
           <div style="flex-grow: 1;">
             <div class="comment-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
               <strong>
-                <%= link_to comment.user.name, user_path(comment.user), style: "text-decoration: none; color: #333;" %>
+                <%= link_to comment.user.name, user_path(comment.user), class: "user-link" %>
               </strong>
               <span class="comment-date" style="color: #666; font-size: 0.9em;"><%= l comment.created_at, format: :long %></span>
               <% if user_signed_in? && (current_user == comment.user || current_user == @post.user) %>
-                <%= link_to '削除', post_comment_path(@post, comment), 
-                            data: { turbo_method: :delete, turbo_confirm: 'コメントを削除しますか？' },
-                            class: 'comment-delete', style: "color: #dc3545; font-size: 0.9em; text-decoration: none;" %>
+                <%= button_to '削除', post_comment_path(@post, comment), 
+                              method: :delete, 
+                              data: { turbo_confirm: 'コメントを削除しますか？' },
+                              class: 'btn btn-sm btn-outline-danger',
+                              style: "font-size: 0.8em; padding: 2px 8px;" %>
               <% end %>
             </div>
             <div class="comment-content">
@@ -184,18 +190,18 @@
     </div>
   <% else %>
     <p class="login-prompt">
-      <%= link_to 'ログイン', new_user_session_path %>してコメントを投稿
+      <%= link_to 'ログイン', new_user_session_path, class: "modern-link" %>してコメントを投稿
     </p>
   <% end %>
 </div>
 
 <% if @post.is_draft %>
-  <%= link_to '下書き一覧へ', drafts_posts_path %>
+  <%= link_to '下書き一覧へ', drafts_posts_path, class: "nav-link" %>
 <% else %>
-  <%= link_to 'ホームへ', home_path %>
+  <%= link_to 'ホームへ', home_path, class: "nav-link" %>
   <% if user_signed_in? && current_user == @post.user %>
-    <%= link_to 'マイページへ', user_path(current_user) %>
+    <%= link_to 'マイページへ', user_path(current_user), class: "nav-link" %>
   <% else %>
-    <%= link_to "#{@post.user.name}さんのページへ", user_path(@post.user) %>
+    <%= link_to "#{@post.user.name}さんのページへ", user_path(@post.user), class: "nav-link" %>
   <% end %>
 <% end %>

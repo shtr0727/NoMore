@@ -17,7 +17,7 @@
           <div class="post-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: white;">
             <div class="post-header" style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
               <div>
-                <strong><%= link_to post.post, post_path(post), style: "text-decoration: none; color: #333;" %></strong>
+                <strong><%= link_to post.post, post_path(post), class: "post-title-link" %></strong>
                 <!-- 検索語がマッチした部分をハイライト -->
                 <% if post.post.downcase.include?(@query.downcase) %>
                   <span style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px; font-size: 0.8em; color: #333;">投稿内容</span>
@@ -67,7 +67,7 @@
               
               <div class="user-info">
                 <h3 style="margin: 0; color: #333; font-size: 1.2em;">
-                  <%= link_to user.name, user_path(user), style: "text-decoration: none; color: inherit;" %>
+                  <%= link_to user.name, user_path(user), class: "user-link" %>
                   <span style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px; font-size: 0.7em; color: #333; margin-left: 8px;">ユーザー名</span>
                 </h3>
                 <% if user.profile.present? %>
@@ -116,5 +116,5 @@
 <% end %>
 
 <div style="text-align: center; margin-top: 30px;">
-  <%= link_to "ホームに戻る", home_path, class: "btn btn-primary" %>
+  <%= link_to "ホームに戻る", home_path, class: "nav-link" %>
 </div>

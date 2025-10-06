@@ -79,7 +79,8 @@
 // ユーザープロフィールボタンのテキスト表示制御（簡素化）
 .user-profile-btn {
   .user-name-text {
-    // シンプルな「マイページ」表記のみ
+    font-size: 0.9rem;
+    font-weight: 500;
   }
 }
 
@@ -401,5 +402,21 @@
     li {
       margin-bottom: 0.25rem;
     }
+  }
+}
+
+// シンプルなリンクスタイル（軽量版）
+.modern-link,
+.user-link,
+.post-title-link,
+.nav-link,
+.card-link,
+.action-link,
+.stats-link {
+  text-decoration: none;
+
+  &:hover {
+    color: #007bff;
+    text-decoration: underline;
   }
 }
