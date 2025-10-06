@@ -22,11 +22,11 @@
 .header-logo a {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: white;
   text-decoration: none;
   padding: 0.5rem 1.2rem;
-  background: #e0e0e0;
-  /* 他のヘッダーボタンと同じ明るいグレー */
+  background: #2c3e50;
+  /* LPと同じ紺色 */
   border-radius: 25px;
   /* 他のヘッダーボタンと同じ角丸 */
   transition: background 0.2s;
@@ -35,8 +35,9 @@
   justify-content: center;
 
   &:hover {
-    background: #d0d0d0;
-    /* 他のヘッダーボタンと同じホバー効果 */
+    background: #34495e;
+    /* ホバー時に少し明るい紺色 */
+    color: white;
   }
 }
 
@@ -75,16 +76,10 @@
   text-align: center;
 }
 
-// ユーザープロフィールボタンのテキスト表示制御
+// ユーザープロフィールボタンのテキスト表示制御（簡素化）
 .user-profile-btn {
   .user-name-text {
-    .desktop-text {
-      display: inline !important;
-    }
-
-    .mobile-text {
-      display: none !important;
-    }
+    // シンプルな「マイページ」表記のみ
   }
 }
 
@@ -198,14 +193,6 @@
   .user-profile-btn {
     .user-name-text {
       font-size: 0.9rem;
-
-      .desktop-text {
-        display: none !important;
-      }
-
-      .mobile-text {
-        display: inline !important;
-      }
     }
   }
 
@@ -224,14 +211,7 @@
 @media (max-width: 1199px) and (min-width: 769px) {
   .user-profile-btn {
     .user-name-text {
-      .desktop-text {
-        display: none !important;
-      }
-
-      .mobile-text {
-        display: inline !important;
-        font-size: 0.9rem;
-      }
+      font-size: 0.9rem;
     }
   }
 
@@ -258,14 +238,7 @@
 
   .user-profile-btn {
     .user-name-text {
-      .desktop-text {
-        display: none !important;
-      }
-
-      .mobile-text {
-        display: inline !important;
-        font-size: 0.8rem;
-      }
+      font-size: 0.8rem;
     }
   }
 
