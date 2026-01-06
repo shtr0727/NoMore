@@ -37,3 +37,41 @@ No Moreは、「やらないこと」を記録・共有するWebアプリです�
 * 朝や寝る前に、「今日やらないこと」を投稿して一日の軸をつくる
 * 自分では気づいていなかった手放したい習慣を、他ユーザーの投稿から見つける
 * 習慣継続のモチベーションとして、日数カウントやバッジ機能を活用
+
+## 利用方法
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3ff916e5-b54b-4a7b-85d4-98909ba262bc" />
+<ul>
+  <li>新規登録またはログイン</lil>
+</ul>
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6dbc2e01-a5e7-443d-a27e-eb5952d3cad2" />
+<ul>
+  <li>やらないことを理由とカテゴリを入力し投稿</li>
+</ul>
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a52e4381-faa9-4624-a9cc-ae28361842a2" />
+<ul>
+  <li>ほかのユーザーの投稿を確認</li>
+  <li>キーワードやカテゴリ検索の使用</li>
+</ul>
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/86cdd994-dfa7-4400-b7ec-ba7523d93d82" />
+<ul>
+  <li>投稿に対する継続バッジの獲得や「いいね」と「コメント」を残す</li>
+</ul>
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f11c9e1b-69d4-45eb-bfa4-f126ed11fe84" />
+
+## 基本機能
+* 基本的なCRUD機能
+* ユーザー認証機能(devise)
+* いいね機能
+* コメント機能
+* フォローフォロワー機能
+* 下書き機能
+* 検索機能
+* バリデーション
+* ページネーション
+* レスポンシブ対応
+
+## 開発環境
+* OS：Windows11 + Git Bash
+* 言語：HTML、CSS、JavaScript、Ruby
+* フレームワーク：Ruby on Rails
+* データベース：PostgreSQL
