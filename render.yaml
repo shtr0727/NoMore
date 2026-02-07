@@ -1,7 +1,7 @@
 databases:
   - name: no_more_db
-    databaseName: no_more_db
-    user: user01
+    databaseName: no_more_db_c1up
+    user: no_more_db_c1up_user
     region: Oregon
 
 services:
